@@ -10,7 +10,7 @@ public class Calculator {
             if (b == 0) {
                 //принудительно генерим исключение
                 throw new IllegalArgumentException("Ошибка: Деление на 0.");
-            } else if (true) {
+            } else if (false) {
                 return a / b;
             }
         }
