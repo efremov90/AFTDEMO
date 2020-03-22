@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PersonTest {
 
-    private final Person person = new Person("FirstName", "LastName", GenderType.TRANSGENDER);
+    private final Person person = new Person("FirstName", "LastName", GenderType.MALE);
 
     @Test
     @DisplayName("Проверка методов getter и setter")
