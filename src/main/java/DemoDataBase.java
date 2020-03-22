@@ -11,7 +11,7 @@ http://www.h2database.com/html/main.html
 нужно в переменные среды WINDOWS добавить переменную JAVA_HOME
 с путем до java, например, C:\Program Files\Java\jdk-13.0.2\bin
 3. В Idea необходимо добавить драйвер h2 C:\Program Files (x86)\H2\bin файл-jar в classpath
-4. Теория https://www.examclouds.com/ru/java/java-core-russian/lesson22*/
+4. Примеры https://www.examclouds.com/ru/java/java-core-russian/lesson22*/
 public class DemoDataBase {
     //Параметры подключения
     //используются в getConnection, см. ниже
