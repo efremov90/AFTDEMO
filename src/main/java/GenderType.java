@@ -25,4 +25,12 @@ public enum GenderType {
         return description;
     }
 
+    public static GenderType getNameByCode(int code) {
+        for (GenderType gt : GenderType.values()) {
+            if (gt.getCode()==code) {
+                return gt;
+            }
+        }
+        return null;
+    }
 }

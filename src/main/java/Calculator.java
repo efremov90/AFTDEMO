@@ -14,7 +14,7 @@ public class Calculator {
                 return a / b;
             }
         }
-        //обработка исключения
+        //обработка исключения - конкретного, т.к. базовый это Exception, а тут IllegalArgumentException
         catch (IllegalArgumentException e)
         {
             e.printStackTrace();

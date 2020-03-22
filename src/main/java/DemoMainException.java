@@ -16,6 +16,7 @@ public class DemoMainException {
 //          Если try catch не было бы, то программа упала бы.
 //          Process finished with exit code 1
         }
+        //перехват исключения - любого, т.к. Exception - это базовый класс
         catch (Exception e) {
             System.out.println("Ошибка: Обратитесь к администратору:");
             e.printStackTrace();
