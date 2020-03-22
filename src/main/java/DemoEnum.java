@@ -14,7 +14,7 @@ public class DemoEnum {
         System.out.println(MALE+" "+ MALE.getCode()+" "+ MALE.getDescription());
         System.out.println();
 
-        System.out.println("Получение списка Значений enum:");
+        System.out.println("Получение списка значений enum:");
         GenderType[] genderTypes = GenderType.values();
         for (GenderType s : genderTypes) { System.out.println(s.getDescription()); };
         System.out.println();
