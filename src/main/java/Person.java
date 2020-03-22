@@ -44,6 +44,7 @@ public class Person {
         Gender = gender;
     }
 
+    //https://www.examclouds.com/ru/java/java-core-russian/method-tostring
     //также через автометически можно добавить toString для вывода информации об объекте
     //метод переопределил, чтобы вместо английских названий полей, выводились русские
     @Override
@@ -53,5 +54,7 @@ public class Person {
                 ", Фамилия=" + LastName +
                 ", Пол=" + Gender.getDescription() +
                 '}';
+
+    //equals https://www.examclouds.com/ru/java/java-core-russian/method-equals
     }
 }
