@@ -8,11 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 //контроль версий https://www.examclouds.com/ru/java/java-core-russian/lesson6
-//настройка h2 https://o7planning.org/ru/11895/installing-h2-database-and-using-h2-console
-//http://www.h2database.com/html/main.html
-//при ошибке подключения h2 database: не удается найти файл javaw
-//нужно в переменные среды добавить переменную JAVA_HOME
-//с путем до java, например, C:\Program Files\Java\jdk-13.0.2\bin
 public class Program {
 
 //    пример https://java-master.com/stream-and-lambda-in-java/
