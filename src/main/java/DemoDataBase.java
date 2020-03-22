@@ -14,6 +14,9 @@ http://www.h2database.com/html/main.html
 4. Теория https://www.examclouds.com/ru/java/java-core-russian/lesson22*/
 public class DemoDataBase {
     //Параметры подключения
+    //используются в getConnection, см. ниже
+    //хороший тон объявлять константы (так читабельнее, понятней)
+    // и уже в метод передавать их
     public static final String DRIVER = "org.h2.Driver";
     public static final String DB = "test";
     public static final String URL = "jdbc:h2:~/"+DB;
@@ -58,9 +61,13 @@ public class DemoDataBase {
             stmt.executeUpdate(INSERT_DEFAULT_PERSON);
             //Выборка
             ResultSet rs = stmt.executeQuery("SELECT * FROM DEMO.PERSON");
+            //Обработка
             while (rs.next()) {
+                //получение значения строки выборки по наименованию поля getString
                 System.out.println(rs.getString("FIRSTNAME")+" "
                         +rs.getString("LASTNAME")+" "
+                        //получение значения GenderType через valueOf по наименованию и вывод русского описания
+                        // getDescription
                         +GenderType.valueOf(rs.getString("GENDER")).getDescription());
             }
             //Удаление
