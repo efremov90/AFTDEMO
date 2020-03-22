@@ -8,9 +8,9 @@ import java.sql.Statement;
 /*1. настройка h2 https://o7planning.org/ru/11895/installing-h2-database-and-using-h2-console
 http://www.h2database.com/html/main.html
 2. При ошибке подключения h2 database: не удается найти файл javaw
-нужно в переменные среды добавить переменную JAVA_HOME
+нужно в переменные среды WINDOWS добавить переменную JAVA_HOME
 с путем до java, например, C:\Program Files\Java\jdk-13.0.2\bin
-3. Также необходимо добавить драйвер h2 C:\Program Files (x86)\H2\bin файл-jar в classpath
+3. В Idea необходимо добавить драйвер h2 C:\Program Files (x86)\H2\bin файл-jar в classpath
 4. Теория https://www.examclouds.com/ru/java/java-core-russian/lesson22*/
 public class DemoDataBase {
     //Параметры подключения

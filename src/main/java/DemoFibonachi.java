@@ -12,7 +12,7 @@ public class DemoFibonachi {
             int[] fibonachi = c.fibonachi(n);
             //цикл foreach https://www.examclouds.com/ru/java/java-core-russian/for-each-cycle
             for (int s : fibonachi) {
-                System.out.print(s+",");
+                System.out.print(s+" ");
             }
             System.out.println();
         } catch (Exception e) {
