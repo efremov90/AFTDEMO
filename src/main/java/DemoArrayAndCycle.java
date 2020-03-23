@@ -2,6 +2,7 @@ package main.java;
 
 public class DemoArrayAndCycle {
 
+    //Напишите функцию вычисления факториала
     //https://www.examclouds.com/ru/java/java-core-russian/recursion
     public static int factorialRecursion(int n) {
         if (n < 0) {
@@ -28,6 +29,7 @@ public class DemoArrayAndCycle {
         }
     }
 
+    //Напишите функцию вычисления первых числе Фибоначчи
     //    https://ru.wikipedia.org/wiki/Числа_Фибоначчи
     public static int[] fibonachi(int n) {
         //массивы https://www.examclouds.com/ru/java/java-core-russian/massivi
@@ -56,6 +58,7 @@ public class DemoArrayAndCycle {
     }
 
     //Реаизуйте функцию, возвращающую двоичное представление числа n(n>=0).
+    //Метод должен иметь сигнатуру String toBinary(int number)
     //Например, 101 - это двоичное представление числа 5
     public static String toBinary(int number) {
         String str="";
