@@ -7,7 +7,7 @@ public class Person {
     //как правило должнен быть приватным
     //получение и проставление значение должно осуществляться через отдельные методы setter и getter
     //это и есть инкапсуляция
-//    https://www.examclouds.com/ru/java/java-core-russian/java-beans-conceptions
+    //https://www.examclouds.com/ru/java/java-core-russian/java-beans-conceptions
     private String FirstName;
     private String LastName;
     private GenderType Gender;
@@ -20,6 +20,7 @@ public class Person {
     }
 
     //getter и setter также добавляются автоматически
+    //про getter и setter https://www.examclouds.com/ru/java/java-core-russian/java-beans-conceptions
     public String getFirstName() {
         return FirstName;
     }

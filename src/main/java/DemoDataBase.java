@@ -17,6 +17,7 @@ public class DemoDataBase {
     //используются в getConnection, см. ниже
     //хороший тон объявлять константы (так читабельнее, понятней)
     // и уже в метод передавать их
+    //final static https://www.examclouds.com/ru/java/java-core-russian/final-keyword
     public static final String DRIVER = "org.h2.Driver";
     public static final String DB = "test";
     public static final String URL = "jdbc:h2:~/"+DB;
@@ -31,7 +32,7 @@ public class DemoDataBase {
     private static final String DROP_SCHEMA_DEMO="drop schema DEMO";
 
     //приходится везде дописывать имя схемы, почему-то без неё не работает
-    private static final String CREATE_TABLE_PERSON="create table DEMO.PERSON " +
+    private static final String CREATE_TABLE_PERSON= "create table DEMO.PERSON" +
             "(PERSON_ID NUMBER(5) auto_increment," +
             "FIRSTNAME VARCHAR2(255)," +
             "LASTNAME  VARCHAR2(255)," +
@@ -42,7 +43,7 @@ public class DemoDataBase {
             "    add constraint PERSON_PK" +
             "    primary key (PERSON_ID);";
 
-    private static final String DROP_TABLE_PERSON="drop table DEMO.PERSON;";
+    private static final String DROP_TABLE_PERSON= "drop table DEMO.PERSON;";
 
     private static final String INSERT_DEFAULT_PERSON="insert into DEMO.PERSON (FIRSTNAME,LASTNAME,GENDER) " +
             "values ('Александр','Ефремов','MALE');" +
