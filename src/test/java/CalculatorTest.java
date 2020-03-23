@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
