@@ -1,4 +1,4 @@
-package main.java;
+package Olya;
 
 public class Transport {
     int passengers, oilvolume, oilprokm;
