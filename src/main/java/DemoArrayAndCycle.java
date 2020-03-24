@@ -48,6 +48,9 @@ public class DemoArrayAndCycle {
     //отсортированных по возрастанию
     public static int[] toArrayAscPositive(int[] a) {
         int count_positive=0;
+        //Если не клонировать, а просто присвоить, то поскольку массив это объект,
+        //то B присвоится ссылка на объект A и при изменении B изменится A
+        //при клонировании B будет создан самостоятельно
         int[] b = a.clone();
         //сортировка пузырьком
         for (int i = 0; i < b.length - 1; i++) {
