@@ -1,5 +1,6 @@
 package main.java;
 
+//Задачи с собеседования
 public class DemoArrayAndCycle {
 
     //Напишите функцию вычисления факториала
