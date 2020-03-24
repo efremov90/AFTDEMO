@@ -43,6 +43,35 @@ public class DemoArrayAndCycle {
         return f;
     }
 
+    //Реализуйте функцию, которая для массива целых чисел возвращает массив положительных чисел,
+    //отсортированных по возрастанию
+    public static int[] toArrayAscPositive(int[] a) {
+        int count_positive=0;
+        int[] b = a.clone();
+        //сортировка пузырьком
+        for (int i = 0; i < b.length - 1; i++) {
+            for (int j = b.length - 1; j > i; j--) {
+                if (b[j - 1] > b[j]) {
+                    int tmp = b[j - 1];
+                    b[j - 1] = b[j];
+                    b[j] = tmp;
+                }
+            }
+        }
+        //подсчитываем количество положительных чисел
+        for (int i : a) {
+            if (i>0) {
+                count_positive=count_positive+1;
+            }
+        }
+        //cоздаем массив для положительных чисел
+        int arr [] = new int[count_positive];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i]=b[b.length-arr.length+i];
+        }
+        return arr;
+    }
+
     //Реализуйте функцию, которая для данного массива целых чисел (int)
     //возвращает значение наиболее близкое к 10. Если существует два одинаковых близких
     //значения (например, 8 и 12), считайте большее значение более близким
@@ -108,8 +137,16 @@ public class DemoArrayAndCycle {
             e.printStackTrace();
         }
 
-        int arr[] = {-100, -10, 0, 9, 11, 100};
-        System.out.println("closeTo10: "+closeTo10(arr));
+        System.out.print("toArrayAscPositive: ");
+        int arr1[] = {11, -10, 9, 100, -100, 0};
+        int arr2[] = toArrayAscPositive(arr1);
+        for (int i : arr2) {
+            System.out.print(i+" ");
+        }
+        System.out.println();
+
+        int arr3[] = {-100, -10, 0, 9, 11, 100};
+        System.out.println("closeTo10: "+closeTo10(arr3));
         int a=444896;
         System.out.println("toBinary: "+a+" = "+toBinary(a));
     }
