@@ -1,5 +1,7 @@
 package main.java;
 
+import java.util.Stack;
+
 //Элемент списка
 class MyElmList {
     private Object Data;
@@ -38,9 +40,9 @@ class MyList {
     private MyElmList firstElm,endElm; //первый и последний элемент списка
 
     public MyList(Object data) {
-        this.count = 1;
         this.firstElm = new MyElmList(data,null,null);
         this.endElm = this.firstElm;
+        this.count = 1;
     }
 
     public int getCount() {
@@ -128,6 +130,101 @@ class MyList {
     }
 }
 
+class MyNode {
+    private int Key;
+    private Object Data;
+    private MyNode LeftNode, RightNode;
+
+    public MyNode(int key, Object data, MyNode leftNode, MyNode rightNode) {
+        Key = key;
+        Data = data;
+        LeftNode = leftNode;
+        RightNode = rightNode;
+    }
+
+    public int getKey() {
+        return Key;
+    }
+
+    public Object getData() {
+        return Data;
+    }
+
+    public MyNode getLeftNode() {
+        return LeftNode;
+    }
+
+    public void setLeftNode(MyNode leftNode) {
+        LeftNode = leftNode;
+    }
+
+    public MyNode getRightNode() {
+        return RightNode;
+    }
+
+    public void setRightNode(MyNode rightNode) {
+        RightNode = rightNode;
+    }
+}
+
+class MyTree {
+    private int Count=0;
+    private MyNode Head;
+
+    public MyTree(int key, Object data) {
+        Head = new MyNode(key, data, null, null);
+        Count=1;
+    }
+
+    public int getCount() {
+        return Count;
+    }
+
+    public Object get(int key) {
+        MyNode cur = Head;
+        while ((cur.getLeftNode()!=null)&&(cur.getKey()>key)
+        ||((cur.getRightNode()!=null)&&(cur.getKey()<=key))) {
+            if ((cur.getLeftNode()!=null)&&(cur.getKey()>key)) {
+                cur=cur.getLeftNode();
+            }
+            if ((cur.getRightNode()!=null)&&(cur.getKey()<=key)) {
+                cur=cur.getRightNode();
+            }
+        }
+        if (cur.getKey()==key) {
+            return cur.getData();
+        } else {
+            return  null;
+        }
+    }
+
+    public void add(int key, Object data) {
+        MyNode cur = Head;
+        while ((cur.getLeftNode()!=null)&&(cur.getKey()>key)
+                ||((cur.getRightNode()!=null)&&(cur.getKey()<=key))) {
+            if ((cur.getLeftNode()!=null)&&(cur.getKey()>key)) {
+                cur=cur.getLeftNode();
+            }
+            if ((cur.getRightNode()!=null)&&(cur.getKey()<=key)) {
+                cur=cur.getRightNode();
+            }
+        }
+        MyNode tempNew = new MyNode(key, data, null, null);
+        Count=Count+1;
+        if (cur.getKey()<=key) {
+            cur.setRightNode(tempNew);
+        } else {
+            cur.setLeftNode(tempNew);
+        }
+    }
+
+    public String toString() {
+//        Stack<MyNode> stack = new Stack<>();
+//        while (false) { return "";}
+        return "";
+    }
+}
+
 public class DemoMyCollection {
     public static void main(String[] args) {
         try {
@@ -143,6 +240,14 @@ public class DemoMyCollection {
             System.out.println("getCount: "+ml.getCount());
             System.out.println("get("+"3): "+ml.get(3));
             System.out.println();
+
+            System.out.println("MyTree:");
+            MyTree mt = new MyTree(5, 50);
+            System.out.println("getCount: "+mt.getCount());
+            mt.add(4,40);
+            System.out.println("add слева: "+mt.getCount());
+            mt.add(6,60);
+            System.out.println("add справа: "+mt.getCount());
         }
         catch (Exception e) {
             System.out.println("Ошибка: Обратитесь к администратору:");
