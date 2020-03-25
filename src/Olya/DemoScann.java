@@ -7,11 +7,8 @@ public class DemoScann {
         Scanner scan2 = new Scanner (System.in);
         System.out.print("Введите любое целое число из интервала от -100 до 100: ");
         int zahl = scan.nextInt();
-        if (zahl > 100) {
-            System.out.println("Зачем ты, тупица, вводишь число больше 100?? Не умеешь читать условие?? Вали отсюда!");
-        }
-        else if (zahl < -100) {
-            System.out.println("Зачем ты, тупица, вводишь число меньше -100?? Не умеешь читать условие?? Вали отсюда!");
+        if ((zahl > 100)| (zahl < -100)) {
+            System.out.println("Тупица, не умеешь читать условие?? Вали отсюда!");
         }
         else if (zahl > 0) {
             System.out.println("Вы ввели положительное число");
