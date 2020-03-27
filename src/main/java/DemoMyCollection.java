@@ -248,6 +248,9 @@ class MyTree {
         }
     }
 
+    //добавление узла
+    //если удалось добавить возвращается добавляемый объект,
+    //если не удалось добавить, когда уже есть с такм key, то возвращается null
     public Object add(int key, Object data) {
         MyNode cur = Head;
         while ((cur.getLeftNode() != null) && (cur.getKey() > key)
