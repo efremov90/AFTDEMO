@@ -1,7 +1,6 @@
 package main.java;
 
 import java.util.Stack;
-import java.util.logging.SocketHandler;
 
 //Элемент списка
 class MyElmList {
@@ -382,7 +381,7 @@ public class DemoMyCollection {
             mt.add(35,35);
             System.out.println("add 35: "+mt.toString());
             System.out.println("isBalance: "+mt.isBalance());
-            mt.add(45,45);
+            mt.add(45, 45);
             System.out.println("add 45: "+mt.toString());
             System.out.println("isBalance: "+mt.isBalance());
             mt.add(43,43);
