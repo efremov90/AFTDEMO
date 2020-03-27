@@ -2,14 +2,17 @@ package main.java;
 
 import java.util.Stack;
 
+//Структуры данных https://www.examclouds.com/ru/java/java-core-russian/collections-russian
+
+//Список https://ru.wikipedia.org/wiki/Связный_список#Линейный_связный_список
+
 //Элемент списка
 class MyElmList {
     private Object Data;
-    private MyElmList PrevElmList, NextElmList;
+    private MyElmList NextElmList; //в двухсвязанных списках еще есть PrevElmList
 
-    public MyElmList(Object data, MyElmList prevElmList, MyElmList nextElmList) {
+    public MyElmList(Object data, MyElmList nextElmList) {
         Data = data;
-        PrevElmList = prevElmList;
         NextElmList = nextElmList;
     }
 
@@ -17,16 +20,8 @@ class MyElmList {
         return Data;
     }
 
-    public MyElmList getPrevElmList() {
-        return PrevElmList;
-    }
-
     public MyElmList getNextElmList() {
         return NextElmList;
-    }
-
-    public void setPrevElmList(MyElmList prevElmList) {
-        PrevElmList = prevElmList;
     }
 
     public void setNextElmList(MyElmList nextElmList) {
@@ -37,11 +32,10 @@ class MyElmList {
 //Список
 class MyList {
     private int count=0; //количество элементов
-    private MyElmList firstElm,endElm; //первый и последний элемент списка
+    private MyElmList firstElm; //в очередях есть еще endElm, чтобы добавлять/извлекать сразу в/из конец
 
     public MyList(Object data) {
-        this.firstElm = new MyElmList(data,null,null);
-        this.endElm = this.firstElm;
+        this.firstElm = new MyElmList(data,null);
         this.count = 1;
     }
 
@@ -49,8 +43,10 @@ class MyList {
         return count;
     }
 
-    //вспомогательный метод для get
-    private MyElmList getMyElmList(int index) {
+    //получение элемента списка по индексу
+    //private для использования внутри
+    //индекса нет в MyElmList: он не нужен, иначе при добавлении/удалении придется пересчитывать у остальных
+    private MyElmList getElmList(int index) {
         MyElmList cur=firstElm;
         for (int i = 1; i <= count; i++) {
             if (i==index) {
@@ -62,17 +58,16 @@ class MyList {
         return null;
     }
 
-    //получение элемента по индексу
-    Object get(int index) {
-        MyElmList cur=firstElm;
-        for (int i = 1; i <= count; i++) {
-            if (i==index) {
-                return cur.getData();
-            } else {
-                cur=cur.getNextElmList();
-            };
+    //получение данных элемента по индексу
+    //public для использования вне
+    public Object get(int index) {
+        MyElmList cur;
+        cur=this.getElmList(index);
+        if (cur!=null) {
+            return cur.getData();
+        } else {
+            return null;
         }
-        return null;
     }
 
     //добавление элемента в список
@@ -87,22 +82,18 @@ class MyList {
             //вставка в начало
             if (index==1) {
                 MyElmList temp = firstElm;
-                firstElm = new MyElmList(data,null,temp);
-                temp.setPrevElmList(firstElm);
-            }
-            //вставка в конец
-            if (index==count+1) {
-                MyElmList temp = endElm;
-                endElm = new MyElmList(data, temp, null);
-                temp.setNextElmList(endElm);
+                firstElm = new MyElmList(data,temp);
             }
             //вставка в середину (текущий cur сдвигается вперед next)
             if ((index>1)&&(index<count+1)) {
-                MyElmList tempCur = getMyElmList(index);
-                MyElmList tempPrev = tempCur.getPrevElmList();
-                MyElmList tempNew = new MyElmList(data, tempPrev,tempCur);
-                tempPrev.setNextElmList(tempNew);
-                tempCur.setPrevElmList(tempNew);
+                MyElmList tempCur = getElmList(index);
+                new MyElmList(data,tempCur);
+            }
+            //вставка в конец
+            if (index==count+1) {
+                MyElmList temp = getElmList(count); //получаем последний элемент
+                MyElmList endElm = new MyElmList(data, null);
+                temp.setNextElmList(endElm);
             }
             //увеличиваем количество элементов
             count=count+1;
@@ -129,6 +120,17 @@ class MyList {
     }
 }
 
+/*
+Дерево https://ru.wikipedia.org/wiki/Дерево_(структура_данных)
+ Тут реализовано двоичное дерево поиска https://ru.wikipedia.org/wiki/Двоичное_дерево_поиска
+ Оба поддерева — левое и правое — являются двоичными деревьями поиска.
+ У всех узлов левого поддерева произвольного узла X значения ключей данных меньше,
+ нежели значение ключа данных самого узла X.
+ У всех узлов правого поддерева произвольного узла X значения ключей данных больше либо равны,
+ нежели значение ключа данных самого узла X.
+*/
+
+//Узел
 class MyNode {
     private int Key;
     private int Level;
@@ -175,9 +177,10 @@ class MyNode {
     }
 }
 
+//Дерево
 class MyTree {
-    private int Count=0;
-    private MyNode Head;
+    private int Count=0; //количество элементов
+    private MyNode Head; //вершина дерева
 
     public MyTree(int key, Object data) {
         Head = new MyNode(key, data, null, null);
@@ -188,8 +191,18 @@ class MyTree {
         return Count;
     }
 
-    public Object get(int key) {
+    public MyNode getHead() {
+        return Head;
+    }
+
+    //получение данных узла по ключу
+    private MyNode getNodeTree(int key) {
         MyNode cur = Head;
+        /*Поиск с учетом условий двоичного дерева поиска:
+        У всех узлов левого поддерева произвольного узла X значения ключей данных меньше,
+        нежели значение ключа данных самого узла X.
+        У всех узлов правого поддерева произвольного узла X значения ключей данных больше либо равны,
+        нежели значение ключа данных самого узла X.*/
         while ((cur.getLeftNode()!=null)&&(cur.getKey()>key)
         ||((cur.getRightNode()!=null)&&(cur.getKey()<=key))) {
             if ((cur.getLeftNode()!=null)&&(cur.getKey()>key)) {
@@ -200,14 +213,27 @@ class MyTree {
             }
         }
         if (cur.getKey()==key) {
-            return cur.getData();
+            return cur;
         } else {
             return  null;
         }
     }
 
+    //получение данных элемента по индексу
+    //public для использования вне
+    public Object get(int index) {
+        MyNode cur;
+        cur=this.getNodeTree(index);
+        if (cur!=null) {
+            return cur.getData();
+        } else {
+            return null;
+        }
+    }
+
     public void add(int key, Object data) {
         MyNode cur = Head;
+        //поиск места добавления аналогично getNodeTree
         while ((cur.getLeftNode()!=null)&&(cur.getKey()>key)
                 ||((cur.getRightNode()!=null)&&(cur.getKey()<=key))) {
             if ((cur.getLeftNode()!=null)&&(cur.getKey()>key)) {
@@ -217,6 +243,7 @@ class MyTree {
                 cur=cur.getRightNode();
             }
         }
+
         MyNode tempNew = new MyNode(key, data, null, null);
         Count=Count+1;
         if (cur.getKey()<=key) {
@@ -226,14 +253,21 @@ class MyTree {
         }
     }
 
-    //Вертикальный обратный обход https://habr.com/ru/post/144850/
-    public String toString() {
+    // Вывод списка узлов, начиная с узла start
+    // Вертикальный обратный обход https://habr.com/ru/post/144850/
+    public String toString(int key) {
         String str="MyTree{";
+        MyNode cur = this.getNodeTree(key);
+        //Если узел не найден, то возвращается null
+        if (cur==null) {
+            return null;
+        }
         //дополнительно выводится информация об уровне
         //уровень вычисляется при проходе
         int currentLevel=0;
+        // тут используется готовый stack Java
+        // теория https://ru.wikipedia.org/wiki/Стек
         Stack<MyNode> stack = new Stack<>();
-        MyNode cur = Head;
         while ((cur!=null)||(!stack.empty())) {
             if (!stack.empty()) {
                 //Обрабатываем верхний узел из стека.
@@ -279,7 +313,9 @@ class MyTree {
         return str=str+"}";
     }
 
-    //Вертикальный обратный обход https://habr.com/ru/post/144850/
+    // Сбалансированное по высоте двоичное дерево поиска: для каждой его вершины высота её двух поддеревьев
+    // различается не более чем на 1.
+    // Проход осуществляется вертикальным обратный обходом аналогично toString
     public boolean isBalance() {
         int currentLevel=0;
         int maxLevel=0;
