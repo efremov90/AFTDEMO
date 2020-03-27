@@ -1,6 +1,7 @@
 package main.java;
 
 import java.util.Stack;
+import java.util.logging.SocketHandler;
 
 //Элемент списка
 class MyElmList {
@@ -284,11 +285,11 @@ class MyTree {
         int currentLevel=0;
         int maxLevel=0;
         int minLevel=0;
-        boolean findFirstTerminate = false;
         boolean offCheckFirstTerminate = false;
         Stack<MyNode> stack = new Stack<>();
         MyNode cur = Head;
 
+        //если у Head отсутствует left или right узел, то он будет всегда минимальным
         if ((Head.getLeftNode()==null)||(Head.getRightNode()==null)) {
             minLevel=0;
         }
@@ -313,15 +314,18 @@ class MyTree {
                 boolean terminate;
                 if ((cur.getLeftNode()==null)&&(cur.getRightNode()==null)) {
                     terminate=true;
-                    findFirstTerminate=true;
                 }
                 else {
                     terminate=false;
                 }
 
-                if (terminate&&findFirstTerminate&&!offCheckFirstTerminate) {
+                //фиксируем min и max Level перевого терминального узла,
+                // относительно него дальше будет осуществляться обновление min и max Level
+                if (terminate&&!offCheckFirstTerminate) {
                     offCheckFirstTerminate=true;
                     maxLevel=currentLevel;
+                    //при этом не обновляем min, если у Head отсутствует left или right узел,
+                    // т.к. он будет всегда минимальным
                     if (!((Head.getLeftNode()==null)||(Head.getRightNode()==null))) {
                         minLevel=currentLevel;
                     }
@@ -357,20 +361,20 @@ public class DemoMyCollection {
         try {
             System.out.println("MyList:");
             MyList ml = new MyList(30);
-            System.out.println("Создание списка: "+ml.toString());
+            System.out.println("Создание списка 30: "+ml.toString());
             ml.add(1,10);
-            System.out.println("add в начало: "+ml.toString());
+            System.out.println("add 10 в начало: "+ml.toString());
             ml.add(3,40);
-            System.out.println("add в конец: "+ml.toString());
+            System.out.println("add 40 в конец: "+ml.toString());
             ml.add(2,20);
-            System.out.println("add в середину: "+ml.toString());
+            System.out.println("add 20 в середину: "+ml.toString());
             System.out.println("getCount: "+ml.getCount());
             System.out.println("get("+"3): "+ml.get(3));
             System.out.println();
 
             System.out.println("MyTree:");
             MyTree mt = new MyTree(50, 50);
-            System.out.println("add 50: "+mt.toString());
+            System.out.println("Создание дерева 50: "+mt.toString());
             System.out.println("isBalance: "+mt.isBalance());
             mt.add(40,40);
             System.out.println("add 40: "+mt.toString());
@@ -403,6 +407,7 @@ public class DemoMyCollection {
             System.out.println("add 57: "+mt.toString());
             System.out.println("isBalance: "+mt.isBalance());
             System.out.println("getCount: "+mt.getCount());
+            System.out.println("get(43): "+mt.get(43).toString());
         }
         catch (Exception e) {
             System.out.println("Ошибка: Обратитесь к администратору:");
