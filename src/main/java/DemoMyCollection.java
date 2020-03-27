@@ -1,8 +1,5 @@
 package main.java;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Stack;
 
 //Структуры данных https://www.examclouds.com/ru/java/java-core-russian/collections-russian
