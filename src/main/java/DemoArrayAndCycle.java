@@ -1,5 +1,7 @@
 package main.java;
 
+import java.util.Arrays;
+
 //Задачи с собеседования
 public class DemoArrayAndCycle {
 
@@ -114,7 +116,8 @@ public class DemoArrayAndCycle {
             Calculator c = new Calculator();
             //задать параметр
             int n = 30;
-            System.out.print("Числа Фибоначи 1-"+n+": ");
+            System.out.println("Числа Фибоначи 1-"+n+": ");
+            System.out.print("вывод foreach: ");
             //вызов fibonachi
             //массивы https://www.examclouds.com/ru/java/java-core-russian/massivi
             int[] fibonachi = fibonachi(n);
@@ -122,6 +125,13 @@ public class DemoArrayAndCycle {
             for (int s : fibonachi) {
                 System.out.print(s+" ");
             }
+            System.out.println();
+            //Статичный метод Arrays.toString() возвращает строковое представление одномерного массива,
+            // разделяя элементы запятой. Вместо того, чтобы перебирать массивы циклом for,
+            // можно воспользоваться этим методом для вывода элементов на консоль.
+            // fibonachi.toString() выведет лишь ссылку на объект
+            System.out.println("вывод Arrays.toString: "+Arrays.toString(fibonachi));
+            System.out.println("вывод fibonachi.toString: "+fibonachi.toString());
             System.out.println();
         } catch (Exception e) {
             System.out.println("Ошибка: Обратитесь к администратору:");

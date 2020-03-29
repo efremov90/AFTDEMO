@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-/*1. настройка h2 https://o7planning.org/ru/11895/installing-h2-database-and-using-h2-console
+/*1. Настройка h2 https://o7planning.org/ru/11895/installing-h2-database-and-using-h2-console
 http://www.h2database.com/html/main.html
 2. При ошибке подключения h2 database: не удается найти файл javaw
 нужно в переменные среды WINDOWS добавить переменную JAVA_HOME
@@ -13,10 +13,8 @@ http://www.h2database.com/html/main.html
 3. В Idea необходимо добавить драйвер h2 C:\Program Files (x86)\H2\bin файл-jar в classpath
 4. Примеры https://www.examclouds.com/ru/java/java-core-russian/lesson22*/
 public class DemoDataBase {
-    //Параметры подключения
-    //используются в getConnection, см. ниже
-    //хороший тон объявлять константы (так читабельнее, понятней)
-    // и уже в метод передавать их
+    //Параметры подключения используются в getConnection (см. ниже).
+    // Хороший тон объявлять константы (так читабельнее, понятней) и уже в метод передавать их
     //final static https://www.examclouds.com/ru/java/java-core-russian/final-keyword
     public static final String DRIVER = "org.h2.Driver";
     public static final String DB = "test";
@@ -25,7 +23,7 @@ public class DemoDataBase {
     public static final String PASSWORD = "12345";
 
     //Запросы
-    //Чтобы последующим людям не создавать схему и таблицу, не наполнять таблицу
+    //Чтобы последующим людям не создавать схему и таблицу, не наполнять таблицу.
     //Прописал эти запросы тут. Т.е. их создание осуществляется динамически при выполнении программы
     private static final String CREATE_SCHEMA_DEMO="create schema DEMO;";
 
@@ -64,10 +62,10 @@ public class DemoDataBase {
             ResultSet rs = stmt.executeQuery("SELECT * FROM DEMO.PERSON");
             //Обработка
             while (rs.next()) {
-                //получение значения строки выборки по наименованию поля getString
+                //Получение значения строки выборки по наименованию поля getString
                 System.out.println(rs.getString("FIRSTNAME")+" "
                         +rs.getString("LASTNAME")+" "
-                        //получение значения GenderType через valueOf по наименованию и вывод русского описания
+                        //Получение значения GenderType через valueOf по наименованию и вывод русского описания
                         // getDescription
                         +GenderType.valueOf(rs.getString("GENDER")).getDescription());
             }
