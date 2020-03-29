@@ -59,12 +59,8 @@ class MyList {
     private MyElmList getElmList(int index) {
         MyElmList cur = firstElm;
         for (int i = 1; i <= count; i++) {
-            if (i == index) {
-                return cur;
-            } else {
-                cur = cur.getNextElmList();
-            }
-            ;
+            if (i == index) return cur;
+            else cur = cur.getNextElmList();
         }
         return null;
     }
@@ -74,22 +70,15 @@ class MyList {
     public Object get(int index) {
         MyElmList cur;
         cur = this.getElmList(index);
-        if (cur != null) {
-            return cur.getData();
-        } else {
-            return null;
-        }
+        if (cur != null) return cur.getData();
+        else return null;
     }
 
     //добавление элемента в список
     void add(int index, Object data) {
         try {
-            if (index > count + 1) {
-                throw new IllegalArgumentException("Позиция вставки " + index + " превышает допустимое значение " + (count + 1));
-            }
-            if (index < 1) {
-                throw new IllegalArgumentException("Позиция вставки " + index + " меньше минимальной 1");
-            }
+            if (index > count + 1) throw new IllegalArgumentException("Позиция вставки " + index + " превышает допустимое значение " + (count + 1));
+            if (index < 1) throw new IllegalArgumentException("Позиция вставки " + index + " меньше минимальной 1");
             //вставка в начало
             if (index == 1) {
                 MyElmList temp = firstElm;
@@ -124,12 +113,11 @@ class MyList {
         for (int i = 1; i <= count; i++) {
             str = str + "{" + cur.getData().toString() + "}";
             //после последнего элемента запятую ставить не нужно
-            if (i < count) {
-                str = str + ",";
-            }
+            if (i < count) str = str + ",";
             cur = cur.getNextElmList();
         }
         str = str + "}";
+
         return str;
     }
 }
@@ -221,18 +209,13 @@ class MyTree {
         */
         while ((cur.getLeftNode() != null) && (cur.getKey() > key)
                 || ((cur.getRightNode() != null) && (cur.getKey() < key))) {
-            if ((cur.getLeftNode() != null) && (cur.getKey() > key)) {
+            if ((cur.getLeftNode() != null) && (cur.getKey() > key))
                 cur = cur.getLeftNode();
-            }
-            if ((cur.getRightNode() != null) && (cur.getKey() < key)) {
+            if ((cur.getRightNode() != null) && (cur.getKey() < key))
                 cur = cur.getRightNode();
-            }
         }
-        if (cur.getKey() == key) {
-            return cur;
-        } else {
-            return null;
-        }
+        if (cur.getKey() == key) return cur;
+        else return null;
     }
 
     //получение данных элемента по индексу
@@ -240,11 +223,8 @@ class MyTree {
     public Object get(int index) {
         MyNode cur;
         cur = this.getNodeTree(index);
-        if (cur != null) {
-            return cur.getData();
-        } else {
-            return null;
-        }
+        if (cur != null) return cur.getData();
+        else return null;
     }
 
     //добавление узла
@@ -254,23 +234,19 @@ class MyTree {
         MyNode cur = Head;
         while ((cur.getLeftNode() != null) && (cur.getKey() > key)
                 || ((cur.getRightNode() != null) && (cur.getKey() < key))) {
-            if ((cur.getLeftNode() != null) && (cur.getKey() > key)) {
+            if ((cur.getLeftNode() != null) && (cur.getKey() > key))
                 cur = cur.getLeftNode();
-            }
-            if ((cur.getRightNode() != null) && (cur.getKey() < key)) {
+            if ((cur.getRightNode() != null) && (cur.getKey() < key))
                 cur = cur.getRightNode();
-            }
         }
 
         MyNode tempNew = new MyNode(key, data, null, null);
         Count = Count + 1;
-        if (cur.getKey() == key) {
-            return null;
-        } else if (cur.getKey() <= key) {
+        if (cur.getKey() == key) return null;
+        else if (cur.getKey() <= key)
             cur.setRightNode(tempNew);
-        } else {
-            cur.setLeftNode(tempNew);
-        }
+        else cur.setLeftNode(tempNew);
+
         return data;
     }
 
@@ -280,9 +256,7 @@ class MyTree {
         String str = "MyTree{";
         MyNode cur = this.getNodeTree(key);
         //Если узел не найден, то возвращается null
-        if (cur == null) {
-            return null;
-        }
+        if (cur == null) return null;
         //дополнительно выводится информация об уровне
         //уровень вычисляется при проходе
         int currentLevel = 0;
@@ -299,9 +273,7 @@ class MyTree {
                 if (cur.getRightNode() != null) {
                     cur = cur.getRightNode();
                     currentLevel = currentLevel + 1;
-                } else {
-                    cur = null;
-                }
+                } else cur = null;
             }
             //из текущего узла «спускаемся» до самого нижнего левого узла, добавляя в стек все посещенные узлы
             while (cur != null) {
@@ -314,23 +286,19 @@ class MyTree {
                         ",level=" + (currentLevel) +
                         ",terminate=" + terminate +
                         ",data={" + cur.getData().toString() + "}}";
-                if (!str.equals("MyTree{")) {
-                    str = str + ",";
-                }
+                if (!str.equals("MyTree{")) str = str + ",";
                 //при проходе уровень вычисляется и сохраняется у узла для того,
                 //чтобы рассчитать относительно него уровень последующих узлов
                 cur.setLevel(currentLevel);
                 stack.push(cur);
                 cur = cur.getLeftNode();
-                if (cur != null) {
-                    currentLevel = currentLevel + 1;
-                }
+                if (cur != null) currentLevel = currentLevel + 1;
             }
         }
         //после последнего элемента запятую ставить не нужно - вырезается
-        if (str.substring(str.length() - 1, str.length()).equals(",")) {
+        if (str.substring(str.length() - 1, str.length()).equals(","))
             str = str.substring(0, str.length() - 1);
-        }
+
         return str = str + "}";
     }
 
@@ -351,9 +319,8 @@ class MyTree {
         MyNode cur = Head;
 
         //если у Head отсутствует left или right узел, то он будет всегда минимальным
-        if ((Head.getLeftNode() == null) || (Head.getRightNode() == null)) {
+        if ((Head.getLeftNode() == null) || (Head.getRightNode() == null))
             minLevel = 0;
-        }
 
         while ((cur != null) || (!stack.empty())) {
             if (!stack.empty()) {
@@ -365,19 +332,15 @@ class MyTree {
                 if (cur.getRightNode() != null) {
                     cur = cur.getRightNode();
                     currentLevel = currentLevel + 1;
-                } else {
-                    cur = null;
-                }
+                } else cur = null;
             }
             //из текущего узла «спускаемся» до самого нижнего левого узла, добавляя в стек все посещенные узлы
             while (cur != null) {
                 //вычисляется терминальный узел
                 boolean terminate;
-                if ((cur.getLeftNode() == null) && (cur.getRightNode() == null)) {
+                if ((cur.getLeftNode() == null) && (cur.getRightNode() == null))
                     terminate = true;
-                } else {
-                    terminate = false;
-                }
+                else terminate = false;
 
                 //фиксируем min и max Level перевого терминального узла,
                 // относительно него дальше будет осуществляться обновление min и max Level
@@ -386,9 +349,8 @@ class MyTree {
                     maxLevel = currentLevel;
                     //при этом не обновляем min, если у Head отсутствует left или right узел,
                     // т.к. он будет всегда минимальным
-                    if (!((Head.getLeftNode() == null) || (Head.getRightNode() == null))) {
+                    if (!((Head.getLeftNode() == null) || (Head.getRightNode() == null)))
                         minLevel = currentLevel;
-                    }
                 }
 
                 //при проходе уровень вычисляется и сохраняется у узла для того,
@@ -403,16 +365,11 @@ class MyTree {
                 }
 
                 cur = cur.getLeftNode();
-                if (cur != null) {
-                    currentLevel = currentLevel + 1;
-                }
+                if (cur != null) currentLevel = currentLevel + 1;
             }
         }
-        if (Math.abs(maxLevel - minLevel) <= 1) {
-            return true;
-        } else {
-            return false;
-        }
+        if (Math.abs(maxLevel - minLevel) <= 1) return true;
+        else return false;
     }
 }
 

@@ -37,14 +37,14 @@ public class DemoString {
         System.out.println("trim: "+"    Hello World ".trim());
         System.out.println();
 
-        System.out.println("join: "+String.join(":", "foobar", "foo", "bar"));
-        String[] split = "abc;bcd;cde".split(";");
-        System.out.println("split: \"abc;bcd;cde\"");
-        System.out.print("result array:");
+        //полезные функции
+        String[] wordsArray = {"one", "two", "three"};
+        String wordsString = String.join(";", wordsArray);
+        System.out.println("join words (Array to String): "+wordsString);
+        String[] split = wordsString.split(";");
+        System.out.println("split words (String to Array):");
         for (String s : split) {
-            System.out.print(" "+s);
+            System.out.println(s);
         }
-
-
     }
 }
