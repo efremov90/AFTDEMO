@@ -14,6 +14,7 @@ public class DemoRegexp {
         String input;
 
         //примеры некоторых регулярок http://html5pattern.com/Miscs
+        //можно ещё проверять на этом сайте https://regexr.com
 
         // Класс Pattern не предусматривает никаких публичных конструкторов. Чтобы создать шаблон, необходимо
         // вызвать compile.
@@ -87,19 +88,9 @@ public class DemoRegexp {
         System.out.println(wordsArrList.toString());
         System.out.println();
 
-        Pattern pattern = Pattern.compile("hello");
-        Matcher matcher = pattern.matcher(input);
-
+        //Замена в строке https://metanit.com/java/tutorial/7.4.php
+        final Pattern REPLACE_JAVA_TO_HTML = Pattern.compile("Java(\\w*)");
         input = "Hello Java! Hello JavaScript! JavaSE 8.";
-        pattern = Pattern.compile("Java(\\w*)");
-        matcher = pattern.matcher(input);
-        String newStr = matcher.replaceAll("HTML");
-        System.out.println(newStr);
-
-        System.out.println();
-        input = "Hello Java! Hello JavaScript! JavaSE 8.";
-        String myStr = input.replaceAll("Java(\\w*)", "HTML");
-        System.out.println(myStr); // Hello HTML! Hello HTML! HTML 8.
-        System.out.println();
+        System.out.println("replace: "+REPLACE_JAVA_TO_HTML.matcher(input).replaceAll("HTML"));
     }
 }
