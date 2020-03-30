@@ -37,6 +37,7 @@ public class DemoArrayAndCycle {
     public static int[] fibonachi(int n) {
         //массивы https://www.examclouds.com/ru/java/java-core-russian/massivi
         int[] f = new int[n];
+        //помним, что у Array нумерация начинается с 0
         f[0]=0;
         f[1]=1;
         //цикл https://www.examclouds.com/ru/java/java-core-russian/lesson5
@@ -55,6 +56,7 @@ public class DemoArrayAndCycle {
         //при клонировании B будет создан самостоятельно
         int[] b = a.clone();
         //сортировка пузырьком
+        //помним, что у Array нумерация начинается с 0
         for (int i = 0; i < b.length - 1; i++) {
             for (int j = b.length - 1; j > i; j--) {
                 if (b[j - 1] > b[j]) {
@@ -83,6 +85,7 @@ public class DemoArrayAndCycle {
     //значения (например, 8 и 12), считайте большее значение более близким
     public static int closeTo10(int[] a) {
         int n=10;
+        //помним, что у Array нумерация начинается с 0
         int close_to_a=a[0];
         for (int i = 0; i < a.length; i++) {
             if ((Math.abs(a[i]-n)<=Math.abs(close_to_a-n))&&(a[i]>close_to_a)) {

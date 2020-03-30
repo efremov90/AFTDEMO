@@ -29,12 +29,21 @@ public class DemoString {
         System.out.println("s5.compareTo(s6): "+(s5.compareTo(s6)));
         System.out.println();
 
+        //indexOf/lastIndexOf ищет первое/последнее вхождение символа или подстроки
         System.out.println("indexOf: "+"Hello world".indexOf("world"));
+        //contains проверяет входит ли подстрока в строку
+        System.out.println("contains: "+"Hello World".contains("world"));
+        System.out.println();
+
+        //substring вырезает подстроку из строки, используя указанные позиции
+        System.out.println("substring: "+"Hello World".substring(5,10));
+        //Помним, что у String как и у Array нумерация начинается с 0
+        System.out.println("substring(0,1): "+"Hello".substring(0,1));
+        System.out.println("replace char: "+"Hello".replace('l', 'R'));
+        System.out.println("replace string: "+"Hello world".replace("world","WORLD"));
         System.out.println();
 
         System.out.println("concat: "+"Hello".concat(" World"));
-        System.out.println("replace char: "+"Hello".replace('l', 'R'));
-        System.out.println("replace string: "+"Hello world".replace("world","WORLD"));
         System.out.println("toLowerCase: "+"Hello".toLowerCase());
         System.out.println("toUpperCase: "+"Hello".toUpperCase());
         System.out.println("trim: "+"    Hello World ".trim());
