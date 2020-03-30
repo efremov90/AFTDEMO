@@ -75,9 +75,10 @@ class MyList {
     }
 
     //добавление элемента в список
-    void add(int index, Object data) {
+    public boolean add(int index, Object data) {
         try {
-            if (index > count + 1) throw new IllegalArgumentException("Позиция вставки " + index + " превышает допустимое значение " + (count + 1));
+            if (index > count + 1)
+                throw new IllegalArgumentException("Позиция вставки " + index + " превышает допустимое значение " + (count + 1));
             if (index < 1) throw new IllegalArgumentException("Позиция вставки " + index + " меньше минимальной 1");
             //вставка в начало
             if (index == 1) {
@@ -101,8 +102,10 @@ class MyList {
             }
             //увеличиваем количество элементов
             count = count + 1;
+            return true;
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -230,24 +233,28 @@ class MyTree {
     //добавление узла
     //если удалось добавить, то возвращается добавляемый объект,
     //если не удалось добавить, когда уже есть с такм key, то возвращается null
-    public Object add(int key, Object data) {
-        MyNode cur = Head;
-        while ((cur.getLeftNode() != null) && (cur.getKey() > key)
-                || ((cur.getRightNode() != null) && (cur.getKey() < key))) {
-            if ((cur.getLeftNode() != null) && (cur.getKey() > key))
-                cur = cur.getLeftNode();
-            if ((cur.getRightNode() != null) && (cur.getKey() < key))
-                cur = cur.getRightNode();
+    public boolean add(int key, Object data) {
+        try {
+            MyNode cur = Head;
+            while ((cur.getLeftNode() != null) && (cur.getKey() > key)
+                    || ((cur.getRightNode() != null) && (cur.getKey() < key))) {
+                if ((cur.getLeftNode() != null) && (cur.getKey() > key))
+                    cur = cur.getLeftNode();
+                if ((cur.getRightNode() != null) && (cur.getKey() < key))
+                    cur = cur.getRightNode();
+            }
+
+            MyNode tempNew = new MyNode(key, data, null, null);
+            Count = Count + 1;
+            if (cur.getKey() == key) return false;
+            else if (cur.getKey() <= key)
+                cur.setRightNode(tempNew);
+            else cur.setLeftNode(tempNew);
+
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-
-        MyNode tempNew = new MyNode(key, data, null, null);
-        Count = Count + 1;
-        if (cur.getKey() == key) return null;
-        else if (cur.getKey() <= key)
-            cur.setRightNode(tempNew);
-        else cur.setLeftNode(tempNew);
-
-        return data;
     }
 
     // Вывод списка узлов, начиная с узла start
@@ -425,7 +432,7 @@ public class DemoMyCollection {
             System.out.println("isBalance: " + mt.isBalance());
             System.out.println("getCount: " + mt.getCount());
             System.out.println("get(43): " + mt.get(43).toString());
-            System.out.println("toString(60): "+ mt.toString(60));
+            System.out.println("toString(60): " + mt.toString(60));
         } catch (Exception e) {
             System.out.println("Ошибка: Обратитесь к администратору:");
             e.printStackTrace();

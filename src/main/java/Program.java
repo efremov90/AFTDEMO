@@ -1,6 +1,3 @@
-import main.java.Calculator;
-import main.java.GenderType;
-import main.java.Person;
 import main.java.User;
 
 import java.util.ArrayList;
