@@ -29,6 +29,9 @@ public class DemoString {
         System.out.println("s5.compareTo(s6): "+(s5.compareTo(s6)));
         System.out.println();
 
+        System.out.println("indexOf: "+"Hello world".indexOf("world"));
+        System.out.println();
+
         System.out.println("concat: "+"Hello".concat(" World"));
         System.out.println("replace char: "+"Hello".replace('l', 'R'));
         System.out.println("replace string: "+"Hello world".replace("world","WORLD"));
