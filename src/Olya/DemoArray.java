@@ -43,6 +43,7 @@ public class DemoArray {
             sum2 += element;
         }
         System.out.println("Сумма элементов массива array2 = " + sum2);
+        System.out.println("Среднее арифметическое элементов массива array2 = " + sum2/array2.length);
         System.out.println();
         // Заполняем элементы массива array1 значениями, увеличивающимися на 1, и выводим их на экран
         int a=0;
