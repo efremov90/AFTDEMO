@@ -74,6 +74,8 @@ class Point {
 
     @Override
     public int hashCode() {
+        //как выячисляется hashCode можно узнать провалившись по hash в Object, а потом еще hashCode в Array:
+        //result = 31 * result + (element == null ? 0 : element.hashCode());
         return Objects.hash(getX(), getY());
     }
 }
