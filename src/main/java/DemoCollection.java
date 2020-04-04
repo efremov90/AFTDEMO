@@ -1,7 +1,6 @@
 package main.java;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static main.java.GenderType.FEMALE;
 import static main.java.GenderType.MALE;
@@ -41,5 +40,7 @@ public class DemoCollection {
         System.out.println("curArrayListPerson.contains(P2): "+curArrayListPerson.contains(P2));
         //contains(AllCollection<?> с) возвращает true, если вызывающая коллекция содержит все элементы с
         System.out.println("curArrayListPerson.containsAll(addArrayListPerson): "+curArrayListPerson.containsAll(addArrayListPerson));
+
+        
     }
 }

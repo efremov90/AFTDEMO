@@ -17,6 +17,7 @@ public class DemoString {
         System.out.println("s1==s4: "+(s1==s4));
         System.out.println();
 
+        //Про equals можно освежить память в DemoOOP
         System.out.println("s3.equals(s4): "+s3.equals(s4));
         System.out.println("s1.equals(s4): "+s1.equals(s4));
         System.out.println();

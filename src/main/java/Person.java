@@ -1,5 +1,7 @@
 package main.java;
 
+import java.util.Objects;
+
 //ООП https://www.examclouds.com/ru/java/java-core-russian/lesson7
 public class Person {
 
@@ -45,6 +47,22 @@ public class Person {
         Gender = gender;
     }
 
+    //Из DemoOOP помним, что нужно определять equals и hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return getFirstName().equals(person.getFirstName()) &&
+                getLastName().equals(person.getLastName()) &&
+                getGender() == person.getGender();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirstName(), getLastName(), getGender());
+    }
+
     //https://www.examclouds.com/ru/java/java-core-russian/method-tostring
     //также через автометически можно добавить toString для вывода информации об объекте
     //метод переопределил, чтобы вместо английских названий полей, выводились русские
@@ -55,7 +73,5 @@ public class Person {
                 ", Фамилия=" + LastName +
                 ", Пол=" + Gender.getDescription() +
                 '}';
-
-    //equals https://www.examclouds.com/ru/java/java-core-russian/method-equals
     }
 }

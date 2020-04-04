@@ -1,5 +1,7 @@
 package main.java;
 
+import java.util.Objects;
+
 //Уровни доступа для класса https://www.examclouds.com/ru/java/java-core-russian/upravlenie-dostupom
 //Если у класса имеется уровень доступа по умолчанию, такой класс
 // оказывается доступным только для кода из данного пакета.
@@ -33,6 +35,46 @@ class ColorBox extends Box {
         this.height = height;
         this.depth = depth;
         this.color = color;
+    }
+}
+
+class Point {
+    double x;
+    double y;
+
+    public Point(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point point = (Point) o;
+        return Double.compare(point.getX(), getX()) == 0 &&
+                Double.compare(point.getY(), getY()) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getX(), getY());
     }
 }
 
@@ -108,5 +150,23 @@ public class DemoOOP {
         // а не типом объекта, на который она ссылается
         //При попытке обратиться к переменной color объекта redBox, возникнет ошибка компиляции.
         // System.out.println("Цвет красной коробки: " + redBox.color);
+
+        //equals, hashcode https://javarush.ru/groups/posts/2179-metodih-equals--hashcode-praktika-ispoljhzovanija
+        Box b3 = new Box(1,1,1);
+        Box b4 = new Box(1,1,1);
+        System.out.println("b3==b4: "+(b3==b4));
+        //тоже вернет false, поскольку для Box equals НЕ переопределен
+        System.out.println("b3.equals(b4): "+(b3.equals(b4)));
+        //разные значения, потому что для Box hashCode НЕ переопределен
+        System.out.println("b3.hashCode: "+b3.hashCode()+" b4.hashCode: "+b4.hashCode());
+        System.out.println();
+
+        Point p1 = new Point(1,1);
+        Point p2 = new Point(1,1);
+        System.out.println("p1==p2: "+(p1==p2));
+        //вернет true, потому что для Point equals Переопределен и Сранивает Значения параметров x и y
+        System.out.println("p1.equals(p2): "+(p1.equals(p2)));
+        //вернет true, потому что для Point hashCode Переопределен и вычисляется По Значениям параметров x и y
+        System.out.println("p1.hashCode: "+p1.hashCode()+" p2.hashCode: "+p2.hashCode());
     }
 }
