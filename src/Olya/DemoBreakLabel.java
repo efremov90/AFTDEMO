@@ -1,5 +1,6 @@
 package Olya;
 
+//label - зло, аналог GOTO в BASIC, никогда не пользоваться
 public class DemoBreakLabel {
     public static void main (String[] args) {
         label:
