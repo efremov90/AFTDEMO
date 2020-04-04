@@ -152,6 +152,7 @@ public class DemoOOP {
         // System.out.println("Цвет красной коробки: " + redBox.color);
 
         //equals, hashcode https://javarush.ru/groups/posts/2179-metodih-equals--hashcode-praktika-ispoljhzovanija
+        // https://habr.com/ru/post/168195/
         //прочитать до КОНЦА
         Box b3 = new Box(1,1,1);
         Box b4 = new Box(1,1,1);
