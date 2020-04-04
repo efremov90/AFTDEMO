@@ -166,7 +166,7 @@ public class DemoOOP {
         System.out.println("p1==p2: "+(p1==p2));
         //вернет true, потому что для Point equals Переопределен и Сранивает Значения параметров x и y
         System.out.println("p1.equals(p2): "+(p1.equals(p2)));
-        //вернет true, потому что для Point hashCode Переопределен и вычисляется По Значениям параметров x и y
+        //одинаковые значения, потому что для Point hashCode Переопределен и вычисляется По Значениям параметров x и y
         System.out.println("p1.hashCode: "+p1.hashCode()+" p2.hashCode: "+p2.hashCode());
     }
 }
