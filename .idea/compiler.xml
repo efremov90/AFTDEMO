@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="AFTDEMO" />
+        <module name="AFTDEMOEAA" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="13" />
