@@ -7,10 +7,10 @@ public class City extends Country {
         super(countryName, population, square, language);
         this.cityName = cityName;
     }
-     public void ProzentCityCorona (double sick){
-         System.out.println("In " + cityName + " " + super.prozentOfSick(sick) + " % of people have virus.");
-         System.out.println();
-     }
+    public void ProzentCityCorona (double sick){
+        System.out.println("In " + cityName + " " + super.prozentOfSick(sick) + " % of people have virus.");
+        System.out.println();
+    }
 
     public String getCityName() {
         return cityName;

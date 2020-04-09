@@ -1,7 +1,5 @@
 package Olya;
 
-import java.util.concurrent.Callable;
-
 public class DemoOOP {
     public static void main (String[] args) {
        Country russia = new Country("Russia", 146745098, 17098246, "russian");
@@ -20,4 +18,6 @@ public class DemoOOP {
         System.out.println("In " + germany.countryName + " prozent of people having corona = " + germany.prozentOfSick(10131) + " %.");
         essen.ProzentCityCorona(3920);
     }
+
+
 }
