@@ -10,6 +10,7 @@ public class DemoCollection {
     public static void main(String[] args) {
 
         //ArrayList https://www.examclouds.com/ru/java/java-core-russian/klass-arraylist
+        //Пояснение реализации https://habr.com/ru/post/128269/
 
         //Инициирование ArrayList
         List<Person> curArrayListPerson = new ArrayList<>();
@@ -41,6 +42,6 @@ public class DemoCollection {
         //contains(AllCollection<?> с) возвращает true, если вызывающая коллекция содержит все элементы с
         System.out.println("curArrayListPerson.containsAll(addArrayListPerson): "+curArrayListPerson.containsAll(addArrayListPerson));
 
-        
+
     }
 }
