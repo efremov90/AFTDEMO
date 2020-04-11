@@ -82,7 +82,7 @@ public class DemoLyambda {
 
         //Если лямбда выражения вызывают только один существующий метод, лучше ссылать на этот метод по его имени.
         // Ссылки на методы (Method References) – это компактные лямбда выражения для методов и конструктров у которых
-        // уже есть имя.
+        // уже есть имя. Прочитать также про четыре вида ссылок. В данному случае ссылка на статический метод
         //https://www.examclouds.com/ru/java/java-core-russian/method-references-russian
         System.out.print("Интерфейс Consumer:Method References: ");
         //System.out::println равносильно (s) -> System.out.println(s);

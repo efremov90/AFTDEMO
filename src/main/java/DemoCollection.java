@@ -42,6 +42,9 @@ public class DemoCollection {
         //contains(AllCollection<?> с) возвращает true, если вызывающая коллекция содержит все элементы с
         System.out.println("curArrayListPerson.containsAll(addArrayListPerson): "+curArrayListPerson.containsAll(addArrayListPerson));
 
+        //Перебор можно посмотреть в DemoIterator
+
+
 
     }
 }

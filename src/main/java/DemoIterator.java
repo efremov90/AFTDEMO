@@ -47,11 +47,5 @@ public class DemoIterator {
 
         System.out.println("JDK 8 streaming example method reference:");
         colors.stream().forEach(System.out::println);
-
-        // JDK 8 for each with lambda
-//        colors.forEach(color -> printItemList(color));
-
-        // JDK 8 for each
-//        colors.forEach(ListExample::printItemList);
     }
 }
