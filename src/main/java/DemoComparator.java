@@ -47,7 +47,7 @@ public class DemoComparator {
 
         //Через Comparator.comparing
         //Если открыть реализацию Comparator.comparing, то можно увидеть, что это метод принимает Function интерфейс,
-        // т.е. lyambda (но выходные параметры не Person, а getGender().getDescription()) и возвращает
+        // т.е. lyambda (но входные параметры не Person, а getGender().getDescription()) и возвращает
         // Comparator со следующим lyambda (c1, c2) -> keyExtractor.apply(c1).compareTo(keyExtractor.apply(c2));
         //т.е. аналогично предыдущей реализации
         Collections.sort(
@@ -58,12 +58,9 @@ public class DemoComparator {
         System.out.println(persons.toString());
 
         //Через Method References
-        //Если открыть реализацию Comparator.comparing, то можно увидеть, что это метод возвращающий Comparator
-        //со следующим лямбда выражением (c1, c2) -> keyExtractor.apply(c1).compareTo(keyExtractor.apply(c2));
-        //т.е. аналогично предыдущей реализации
         Collections.sort(
                 persons,
-                //но по getDescription не получится, т.к. Method References (см. DemoLyambda) можно использовать при
+                //По getDescription не получится, т.к. Method References (см. DemoLyambda) можно использовать при
                 // одном вызове, а тут получается сначала вызывается getGender, а затем getDescription
                 // вданном случае ссылка на нестатический метод конкретного объекта
                 Comparator.comparing(Person::getGender)
