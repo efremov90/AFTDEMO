@@ -5,12 +5,22 @@ import java.util.*;
 import static main.java.GenderType.FEMALE;
 import static main.java.GenderType.MALE;
 
-//Collection https://www.examclouds.com/ru/java/java-core-russian/interface-collection
+/*Collection знакомство
+https://www.examclouds.com/ru/java/java-core-russian/interface-collection
+https://www.examclouds.com/ru/java/java-core-russian/collections-russian
+
+List знакомство https://www.examclouds.com/ru/java/java-core-russian/interface-list
+
+ArrayList https://www.examclouds.com/ru/java/java-core-russian/klass-arraylist
+Пояснение реализации https://habr.com/ru/post/128269/ Обязательно!
+Достоинства класса ArrayList:
+- Быстрый доступ по индексу.
+- Быстрая вставка и удаление элементов с конца.
+Недостатки класса ArrayList:
+- Медленная вставка и удаление элементов в середину.
+*/
 public class DemoArrayList {
     public static void main(String[] args) {
-
-        //ArrayList https://www.examclouds.com/ru/java/java-core-russian/klass-arraylist
-        //Пояснение реализации https://habr.com/ru/post/128269/
 
         //Инициирование ArrayList
         List<Person> curArrayListPerson = new ArrayList<>();
