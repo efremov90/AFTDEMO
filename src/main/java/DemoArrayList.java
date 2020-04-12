@@ -6,7 +6,7 @@ import static main.java.GenderType.FEMALE;
 import static main.java.GenderType.MALE;
 
 //Collection https://www.examclouds.com/ru/java/java-core-russian/interface-collection
-public class DemoCollection {
+public class DemoArrayList {
     public static void main(String[] args) {
 
         //ArrayList https://www.examclouds.com/ru/java/java-core-russian/klass-arraylist
@@ -44,7 +44,7 @@ public class DemoCollection {
 
         //Перебор можно посмотреть в DemoIterator
 
-
+        //Сортировку можно посмотреть в DemoComparator
 
     }
 }
