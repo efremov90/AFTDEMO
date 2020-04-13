@@ -6,14 +6,18 @@ import static main.java.GenderType.FEMALE;
 import static main.java.GenderType.MALE;
 
 //https://www.examclouds.com/java/java-core-russian/interface-comparator
-//https://riptutorial.com/java/example/387/using-lambda-expressions-to-sort-a-collection
+//http://java-online.ru/blog-comparator.xhtml
+
 //класс реализует интерфейс Comparator для Person
 class PersonComparatorGenderDescription implements Comparator<Person> {
 
     //переопределен метод
     @Override
     public int compare(Person o1, Person o2) {
+        //compareTo - см. http://java-online.ru/blog-comparator.xhtml
         return o1.getGender().getDescription().compareTo(o2.getGender().getDescription());
+        //если нужно реализовывть сложную логику сравнения, то можно реализовать самому без compareTo самостоятельно,
+        //например, как для SortedByPrice  см. http://java-online.ru/blog-comparator.xhtml
     }
 }
 
@@ -38,6 +42,7 @@ public class DemoComparator {
         System.out.println(persons.toString());
 
         //Через lyambda, т.е. анонимный метод аналогичный compare в PersonComparatorGenderDescription
+        //https://riptutorial.com/java/example/387/using-lambda-expressions-to-sort-a-collection
         Collections.sort(
                 persons,
                 (Person o1,Person o2)->(o1.getGender().getDescription().compareTo(o2.getGender().getDescription()))

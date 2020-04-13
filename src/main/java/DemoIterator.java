@@ -7,7 +7,7 @@ import java.util.List;
 public class DemoIterator {
     public static void main (String[] args) {
 
-        //https://juja.com.ua/java/java-collections/iterate-arraylist-java/
+        //Пример https://juja.com.ua/java/java-collections/iterate-arraylist-java/
         List<String> colors = Arrays.asList("red", "yellow");
 
         System.out.println("Basic loop:");
@@ -30,7 +30,7 @@ public class DemoIterator {
         }
         System.out.println();
 
-        //https://metanit.com/java/tutorial/5.10.php
+        //http://java-online.ru/java-collection.xhtml
         //https://hr-vector.com/java/iterator
         //https://www.examclouds.com/ru/java/java-core-russian/iterator
         System.out.println("Iterator with while loop:");
