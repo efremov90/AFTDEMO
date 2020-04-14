@@ -35,6 +35,9 @@ public class DemoIterator {
         //https://www.examclouds.com/ru/java/java-core-russian/iterator
         System.out.println("Iterator with while loop:");
         Iterator<String> it = colors.iterator();
+        //Также есть ListIterator, который можно использовать как для LinkedList, так и ArrayList для двустороннего
+        // обхода списка hasPrevious и видоизменения set его элементов.
+        // У простого Iterator только hasNext, next и next
         while (it.hasNext()) {
             String color = it.next();
             System.out.println("color: "+color);
