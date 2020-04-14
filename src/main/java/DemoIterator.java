@@ -7,7 +7,7 @@ import java.util.List;
 public class DemoIterator {
     public static void main (String[] args) {
 
-        //https://juja.com.ua/java/java-collections/iterate-arraylist-java/
+        //Пример https://juja.com.ua/java/java-collections/iterate-arraylist-java/
         List<String> colors = Arrays.asList("red", "yellow");
 
         System.out.println("Basic loop:");
@@ -30,11 +30,14 @@ public class DemoIterator {
         }
         System.out.println();
 
-        //https://metanit.com/java/tutorial/5.10.php
+        //http://java-online.ru/java-collection.xhtml
         //https://hr-vector.com/java/iterator
         //https://www.examclouds.com/ru/java/java-core-russian/iterator
         System.out.println("Iterator with while loop:");
         Iterator<String> it = colors.iterator();
+        //Также есть ListIterator, который можно использовать как для LinkedList, так и ArrayList для двустороннего
+        // обхода списка hasPrevious и видоизменения set его элементов.
+        // У простого Iterator только hasNext, next и next
         while (it.hasNext()) {
             String color = it.next();
             System.out.println("color: "+color);
@@ -47,11 +50,5 @@ public class DemoIterator {
 
         System.out.println("JDK 8 streaming example method reference:");
         colors.stream().forEach(System.out::println);
-
-        // JDK 8 for each with lambda
-//        colors.forEach(color -> printItemList(color));
-
-        // JDK 8 for each
-//        colors.forEach(ListExample::printItemList);
     }
 }

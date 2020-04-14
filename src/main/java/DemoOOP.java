@@ -121,6 +121,8 @@ public class DemoOOP {
         Box b1 = new Box(10,20,30);
         //При объявлении переменной b2, вместо создания нового объекта,
         //переменной присваивается ссылка на объект b1.
+        //Для реализации клонирования класс должен применить интерфейс Cloneable
+        //см. https://www.examclouds.com/ru/java/java-core-russian/class-object
         Box b2 = b1;
         b2.width = 3;
         System.out.println("Width: " + b1.width);
@@ -154,8 +156,7 @@ public class DemoOOP {
         // System.out.println("Цвет красной коробки: " + redBox.color);
 
         //equals, hashcode https://javarush.ru/groups/posts/2179-metodih-equals--hashcode-praktika-ispoljhzovanija
-        // https://habr.com/ru/post/168195/
-        //прочитать до КОНЦА
+        //прочитать до КОНЦА https://habr.com/ru/post/168195/
         Box b3 = new Box(1,1,1);
         Box b4 = new Box(1,1,1);
         System.out.println("b3==b4: "+(b3==b4));

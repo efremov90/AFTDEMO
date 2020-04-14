@@ -10,23 +10,23 @@ public class DemoBaseOperation {
     // печатает само себя в остальных случаях
 
     public static void printFooBar(int a) {
-        System.out.print(a+": ");
-        if ((a%3)==0) {
+        System.out.print(a + ": ");
+        if ((a % 3) == 0) {
             System.out.print("bar ");
         }
-        if ((a%5)==0) {
+        if ((a % 5) == 0) {
             System.out.print("foo ");
         }
-        if ((a%15)==0) {
+        if ((a % 15) == 0) {
             System.out.print("foobar ");
         }
-        if (((a%3)!=0) && ((a%5)!=0)) {
+        if (((a % 3) != 0) && ((a % 5) != 0)) {
             System.out.print(a);
         }
         System.out.println();
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         printFooBar(3);
         printFooBar(5);
         printFooBar(15);
