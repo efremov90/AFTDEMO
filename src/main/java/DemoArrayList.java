@@ -13,6 +13,7 @@ https://www.examclouds.com/ru/java/java-core-russian/collections-russian
 List знакомство https://www.examclouds.com/ru/java/java-core-russian/interface-list
 
 ArrayList https://www.examclouds.com/ru/java/java-core-russian/klass-arraylist
+http://java-online.ru/java-arrayList.xhtml
 
 Обязательно:
 https://habr.com/ru/post/128269/
