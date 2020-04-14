@@ -12,7 +12,7 @@ Scanner scan = new Scanner(System.in);
 
         // Составляю таблицу кодов субъектов РФ и соответствующих им названий
         // Я несколько перечислила, а вообще их 89  http://новыеформы.рф/kodirf.html
-        HashMap <String, String> cities = new HashMap<String, String>();
+        HashMap <String, String> cities = new HashMap<>();
         cities.put ("02", "Республика Бурятия");
         cities.put ("03", "Республика Алтай");
         cities.put ("04", "Республика Дагестан");
@@ -63,7 +63,7 @@ Scanner scan = new Scanner(System.in);
         }
 
         // Составляю таблицу зараженных субъектов РФ и количеством больных людей для каждого из них
-        HashMap <String, Integer> people = new HashMap<String, Integer>();
+        HashMap <String, Integer> people = new HashMap<>();
         people.put ("02", s02.size());
         people.put ("03", s03.size());
         people.put ("05", s05.size());
@@ -74,7 +74,7 @@ Scanner scan = new Scanner(System.in);
         System.out.println("Введите код субъекта РФ : ");
         String code = scan.nextLine();
 
-        System.out.println("Количество больных в населенном пункте " + cities.get(code) + " составляет " + people.get(code) +  " человек." );
+        System.out.println("Количество больных в населенном пункте " + cities.get(code) + " составляет " + people.get(code) +  " человек. " );
 
 }
 
