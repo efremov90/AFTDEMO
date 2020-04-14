@@ -1,4 +1,4 @@
-package Olya;
+/*package Olya;
 
 public class Country {
 String countryName, language;
@@ -17,3 +17,6 @@ double population, square;
 
 
 }
+
+
+ */

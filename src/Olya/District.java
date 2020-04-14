@@ -1,4 +1,4 @@
-package Olya;
+/* package Olya;
 
 public class District extends City {
     String districtName;
@@ -13,3 +13,6 @@ public class District extends City {
     }
 
 }
+
+
+ */
