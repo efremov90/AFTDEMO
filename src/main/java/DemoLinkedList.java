@@ -3,8 +3,18 @@ package main.java;
 import java.util.LinkedList;
 
 /*
-LinkedList http://java-online.ru/java-linkedList.xhtml
+LinkedList https://vertex-academy.com/tutorials/ru/list-java-primer/
+http://java-online.ru/java-linkedList.xhtml
 https://www.examclouds.com/ru/java/java-core-russian/interface-queue
+
+
+Реализация https://habr.com/ru/post/127864/
+При добавлении элемента, последовательность шагов следующая (в середину):
+1. Осуществляется поиск элемента перед которым будет производиться вставка
+Запоминается элемент перед которым будет производиться вставка и через prev после которого
+2. Создается новый новый экземпляр класса Entry
+3. У вставляемого элемента задаются prev и next соответственно равными предшествующему и последующему,
+а у них на него (у предшествующего next, у последующего prev задаются)
 
 Обязательно:
 Ответы https://ru.stackoverflow.com/questions/568119/Отличие-arraylist-от-linkedlist
@@ -12,6 +22,7 @@ https://www.examclouds.com/ru/java/java-core-russian/interface-queue
 без видео и комментариев https://vk.com/topic-68704273_30860436
 
 Сложность ArrayList и LinkedList (по индексу элемента, а не значению (объекту)!):
+https://ru.stackoverflow.com/questions/568119/Отличие-arraylist-от-linkedlist
                             |  ArrayList  |  LinkedList
 add (в начало)              |     O(n)    |   O(1)
 add (в середину)            |     O(n)    |   O(n)

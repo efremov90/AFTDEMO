@@ -5,6 +5,7 @@ import java.util.Stack;
 //Структуры данных https://www.examclouds.com/ru/java/java-core-russian/collections-russian
 
 //Список https://ru.wikipedia.org/wiki/Связный_список#Линейный_связный_список
+// Я тут опытался реализовать аналог LinkedList из Java, см. описание LinkedList в DemoLinkedList
 
 //Элемент списка
 class MyElmList {
