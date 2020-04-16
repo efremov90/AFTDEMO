@@ -20,18 +20,7 @@ https://www.examclouds.com/ru/java/java-core-russian/interface-queue
 Перый абзац https://habr.com/ru/post/262943/
 без видео и комментариев https://vk.com/topic-68704273_30860436
 
-Сложность ArrayList и LinkedList (по индексу элемента, а не значению (объекту)!):
-https://ru.stackoverflow.com/questions/568119/Отличие-arraylist-от-linkedlist
-                            |  ArrayList  |  LinkedList
-add (в начало)              |     O(n)    |   O(1)
-add (в середину)            |     O(n)    |   O(n)
-add (в конец списка)        |     O(n)    |   O(1)
-get (первый элемент)        |     O(1)    |   O(1)
-get (из середины)           |     O(1)    |   O(n)
-get (последний элемент)     |     O(1)    |   O(1)
-remove (первый элемент)     |     O(n)    |   O(1)
-remove (из середины)        |     O(n)    |   O(n)
-remove (последний элемент)  |     O(1)    |   O(1)
+Сложность ArrayList и LinkedList см. DemoArrayList
 
 Таким образом LinkedList имеет смысл использовать, если приходится часто добавлять и удалять элементы,
 В особенности, если добавлять и удалять в конец/начало, т.е. использовать как очередь или стек
