@@ -62,6 +62,7 @@ http://javastudy.ru/interview/collections/
 ConcurrentHashMap Многопоточный аналог HashMap. Все данные делятся на отдельные сегменты и блокируются только
 отдельные сегменты при изменении, что позволяет значительно ускорить работу в многопоточном
 режиме. https://itnan.ru/post.php?c=1&p=314386
+http://javastudy.ru/interview/collections/
 */
 
     public class DemoHashMap {
