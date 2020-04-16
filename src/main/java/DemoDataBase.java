@@ -5,13 +5,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-/*1. Настройка h2 https://o7planning.org/ru/11895/installing-h2-database-and-using-h2-console
+/*
+1. Настройка h2 https://o7planning.org/ru/11895/installing-h2-database-and-using-h2-console
 http://www.h2database.com/html/main.html
 2. При ошибке подключения h2 database: не удается найти файл javaw
 нужно в переменные среды WINDOWS добавить переменную JAVA_HOME
 с путем до java, например, C:\Program Files\Java\jdk-13.0.2\bin
 3. В Idea необходимо добавить драйвер h2 C:\Program Files (x86)\H2\bin файл-jar в classpath
-4. Примеры https://www.examclouds.com/ru/java/java-core-russian/lesson22*/
+4. Примеры https://www.examclouds.com/ru/java/java-core-russian/lesson22
+*/
 public class DemoDataBase {
     //Параметры подключения используются в getConnection (см. ниже).
     // Хороший тон объявлять константы (так читабельнее, понятней) и уже в метод передавать их
