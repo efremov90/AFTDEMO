@@ -53,6 +53,7 @@ LinkedHashMap - хранит значения в порядке добавлен
 элемента хранятся еще указатели на следующий и предыдущий элементы списка).
 TreeMap - сама сортирует значения по заданному критерию. TreeMap используется либо с Comparable элементами, либо в
 связке с Comparator.
+TreeMap реализован на красно-черном дереве https://ru.wikipedia.org/wiki/Красно-чёрное_дерево
 
 Hashtable считается устаревшим. Новый синхронный потокобезопасный вариант это ConcurrentHashMap.
 https://www.examclouds.com/ru/java/java-core-russian/legacy-collections
@@ -63,7 +64,7 @@ ConcurrentHashMap Многопоточный аналог HashMap. Все дан
 режиме. https://itnan.ru/post.php?c=1&p=314386
 */
 
-public class DemoHashMap {
+    public class DemoHashMap {
     public static void main(String[] args) {
         //HashMap позволяет удблировать значения, но не ключи
 
