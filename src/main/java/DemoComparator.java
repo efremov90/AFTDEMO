@@ -6,6 +6,7 @@ import static main.java.GenderType.FEMALE;
 import static main.java.GenderType.MALE;
 
 //https://www.examclouds.com/java/java-core-russian/interface-comparator
+//https://metanit.com/java/tutorial/5.6.php
 //http://java-online.ru/blog-comparator.xhtml
 
 //класс реализует интерфейс Comparator для Person
@@ -14,7 +15,7 @@ class PersonComparatorGenderDescription implements Comparator<Person> {
     //переопределен метод
     @Override
     public int compare(Person o1, Person o2) {
-        //compareTo - см. http://java-online.ru/blog-comparator.xhtml
+        //в return используется compareTo - см. http://java-online.ru/blog-comparator.xhtml
         return o1.getGender().getDescription().compareTo(o2.getGender().getDescription());
         //если нужно реализовывть сложную логику сравнения, то можно реализовать самому без compareTo самостоятельно,
         //например, как для SortedByPrice  см. http://java-online.ru/blog-comparator.xhtml
@@ -66,18 +67,31 @@ public class DemoComparator {
         Collections.sort(
                 persons,
                 //По getDescription не получится, т.к. Method References (см. DemoLyambda) можно использовать при
-                // одном вызове, а тут получается сначала вызывается getGender, а затем getDescription
-                // вданном случае ссылка на нестатический метод конкретного объекта
+                // одном вызове, а тут получается сначала вызывается getGender, а затем getDescription.
+                //В данном случае ссылка на нестатический метод конкретного объекта.
                 Comparator.comparing(Person::getGender)
         );
         System.out.println("Сортировка по полу:Method References:");
         System.out.println(persons.toString());
 
+        //thenComparing  позволяет использовать цепочки компараторов для сортировки набора
+        //в данном случае сначала сортировка по фамилии, затем по имени
         Collections.sort(
                 persons,
                 Comparator.comparing(Person::getLastName).thenComparing(Person::getFirstName)
         );
         System.out.println("Сортировка по ФИ:");
+        System.out.println(persons.toString());
+
+        //Сортировка по ФИ в обратном порядке:
+        Collections.sort(
+                persons,
+                //Для сортировки в обратном порядке нужно поменять местами с o1.compareTo(o2) на o2.compareTo(o1)
+                //thenComparing - это аналог "+" через compareTo
+                (Person o1,Person o2)->((o2.getLastName().compareTo(o1.getLastName()))
+                        +(o2.getFirstName().compareTo(o1.getFirstName())))
+        );
+        System.out.println("Сортировка по ФИ (обратно):");
         System.out.println(persons.toString());
     }
 }
