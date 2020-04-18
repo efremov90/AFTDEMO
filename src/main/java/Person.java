@@ -12,13 +12,23 @@ public class Person {
     //https://www.examclouds.com/ru/java/java-core-russian/java-beans-conceptions
     private String FirstName;
     private String LastName;
+    private String PersonalNumber;
     private GenderType Gender;
+    private int Age;
 
     //constructor можно добавить автоматически: контекстное меню -> generate ->
     public Person(String firstName, String lastName, GenderType gender) {
         FirstName = firstName;
         LastName = lastName;
         Gender = gender;
+    }
+
+    public Person(String firstName, String lastName, String personalNumber, GenderType gender, int age) {
+        FirstName = firstName;
+        LastName = lastName;
+        PersonalNumber = personalNumber;
+        Gender = gender;
+        Age = age;
     }
 
     //getter и setter также добавляются автоматически
@@ -31,8 +41,16 @@ public class Person {
         return LastName;
     }
 
+    public String getPersonalNumber() {
+        return PersonalNumber;
+    }
+
     public GenderType getGender() {
         return Gender;
+    }
+
+    public int getAge() {
+        return Age;
     }
 
     public void setFirstName(String firstName) {
@@ -43,8 +61,16 @@ public class Person {
         LastName = lastName;
     }
 
+    public void setPersonalNumber(String personalNumber) {
+        PersonalNumber = personalNumber;
+    }
+
     public void setGender(GenderType gender) {
         Gender = gender;
+    }
+
+    public void setAge(int age) {
+        Age = age;
     }
 
     //Из DemoOOP помним, что нужно определять equals и hashCode
@@ -53,8 +79,10 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return getFirstName().equals(person.getFirstName()) &&
+        return getAge() == person.getAge() &&
+                getFirstName().equals(person.getFirstName()) &&
                 getLastName().equals(person.getLastName()) &&
+                Objects.equals(getPersonalNumber(), person.getPersonalNumber()) &&
                 getGender() == person.getGender();
     }
 
@@ -71,7 +99,9 @@ public class Person {
         return "Человек {" +
                 "Имя=" + FirstName +
                 ", Фамилия=" + LastName +
+                ", №=" + PersonalNumber +
                 ", Пол=" + Gender.getDescription() +
+                ", Возраст=" + Age +
                 '}';
     }
 }

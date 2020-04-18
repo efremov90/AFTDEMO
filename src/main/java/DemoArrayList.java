@@ -15,6 +15,7 @@ List знакомство https://www.examclouds.com/ru/java/java-core-russian/i
 ArrayList https://www.examclouds.com/ru/java/java-core-russian/klass-arraylist
 http://java-online.ru/java-arrayList.xhtml
 https://vertex-academy.com/tutorials/ru/arraylist-v-java/
+https://javahelp.online/collections/java-list
 
 Реализация https://habr.com/ru/post/128269/
 https://javarush.ru/groups/posts/1936-rabota-arraylist-v-kartinkakh--
@@ -74,7 +75,8 @@ public class DemoArrayList {
         //Добавил на позицию 0
         curArrayListPerson.add(0,P2);
         //Вывод
-        System.out.println("curArrayListPerson add1, add2, add2: "+curArrayListPerson.toString());
+        System.out.println("curArrayListPerson add, add, add: "+curArrayListPerson.toString());
+
         //Получение элемента по индексу (как и в массиве нумерация с 0)
         System.out.println("get(2): "+curArrayListPerson.get(2));
         //set(int index, E obj) естественно нужно указывать в какой позиции index нужно задать obj
@@ -84,7 +86,7 @@ public class DemoArrayList {
         List<Person> addArrayListPerson = new ArrayList<>();
         addArrayListPerson.add(new Person("Имя3", "Фамилия3", MALE));
         addArrayListPerson.add(new Person("Имя4", "Фамилия4", FEMALE));
-        System.out.println("curArrayListPerson add1, add2: "+addArrayListPerson.toString());
+        System.out.println("curArrayListPerson add, add: "+addArrayListPerson.toString());
         //Добавление в ArrayList списка элементов другого ArrayList
         curArrayListPerson.addAll(addArrayListPerson);
         System.out.println("curArrayListPerson.addAll(addArrayListPerson): "+curArrayListPerson.toString());
@@ -92,6 +94,7 @@ public class DemoArrayList {
         //contains(Object obj) возвращает true, если obj является элементом вызывающей коллекции
         // contains,remove(Object obj) при вызове по объекту работают по ссылке, т.е. передав новый объект с похожим
         // реквизитным составом, он не найдется, не удалится
+        // это относится для любых классов
         Person duplicateP2 = new Person("Имя2", "Фамилия2", MALE);
         System.out.println("curArrayListPerson.contains(duplicateP2): "+curArrayListPerson.contains(duplicateP2));
         System.out.println("curArrayListPerson.contains(P2): "+curArrayListPerson.contains(P2));

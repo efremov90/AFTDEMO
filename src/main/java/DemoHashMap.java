@@ -4,6 +4,7 @@ package main.java;
 HashMap https://vertex-academy.com/tutorials/ru/map-v-java-hashmap/
 http://java-online.ru/java-map.xhtml
 https://devcolibri.com/hashmap-и-hashset-что-это-на-самом-деле/
+https://javahelp.online/collections/map-v-java-s-primerami
 https://www.examclouds.com/ru/java/java-core-russian/map
 http://developer.alexanderklimov.ru/android/java/hashmap.php
 
@@ -47,8 +48,11 @@ contains|     O(1)    |       O(1)      |   O(log N)  |
 элементы и отсутствуют коллизии. Среднее же время работы будет Θ(1 + α), где α — коэффициент загрузки. В самом худшем
 случае, время выполнения может составить Θ(n) (все элементы в одном списке);
 
-HashMap - хранит значения в произвольном порядке, но позволяет быстро искать элементы карты. Позволяет задавать ключ
-или значение ключевым словом null.
+HashMap позволяет дублировать значения, но не ключи.
+
+HashMap - хранит значения в произвольном порядке (нет гарантий, что порядок сохранится на протяжении времени), но
+позволяет быстро искать элементы карты.
+Позволяет задавать ключ или значение ключевым словом null.
 LinkedHashMap - хранит значения в порядке добавления, но работает медленнее и занимает больше места (кроме самого
 элемента хранятся еще указатели на следующий и предыдущий элементы списка).
 TreeMap - сама сортирует значения по заданному критерию. TreeMap используется либо с Comparable элементами, либо в
@@ -65,9 +69,110 @@ ConcurrentHashMap Многопоточный аналог HashMap. Все дан
 http://javastudy.ru/interview/collections/
 */
 
-    public class DemoHashMap {
-    public static void main(String[] args) {
-        //HashMap позволяет удблировать значения, но не ключи
+import java.util.*;
 
+import static main.java.GenderType.FEMALE;
+import static main.java.GenderType.MALE;
+
+public class DemoHashMap {
+    public static void main(String[] args) {
+
+        HashMap<String,Person> curHashMap = new HashMap<>();
+        //Добавление элементов с созданием при вызове
+        curHashMap.put("N1",new Person("Имя1", "Фамилия1", "N1",MALE,30));
+        //заранее созданных, полученных откуда-либо
+        Person P2 = new Person("Имя2", "Фамилия2", "N2",FEMALE,31);
+        curHashMap.put(P2.getPersonalNumber(),P2);
+        //При добавлении дубля по ключу значения перезаписыаются
+        curHashMap.put("N1",new Person("Имя3", "Фамилия3", "N3",MALE,30));
+        //replace(K key, V value) Замена значения value для записи с ключом key
+        //т.е. если элемента с key нет, то в отличии от put добавления нового не произойдет
+        curHashMap.replace("N4",new Person("Имя4", "Фамилия4", "N4",MALE, 35));
+        //Вывод
+        System.out.println("curHashMap put, put, put, replace: "+curHashMap.toString());
+
+        //Получение элемента по ключу
+        System.out.println("get('N2'): "+curHashMap.get("N2"));
+
+        //containsKey(Object key) возвращает true, если key является элементом вызывающей коллекции
+        //также как и во всех кол
+        System.out.println("curHashMap.containsKey('N2'): "+curHashMap.containsKey("N2"));
+
+        //Получение ключей записей в виде коллекции Set<K>
+        System.out.println("curHashMap.keySet(): "+curHashMap.keySet());
+        //Получение значений записей в виде коллекции Collection<V>
+        System.out.println("curHashMap.values(): "+curHashMap.values());
+        //Получения объектов записей в виде коллекции Set<Map.Entry<K,V>>
+        System.out.println("curHashMap.entrySet(): "+curHashMap.entrySet());
+        System.out.println();
+
+        //Перебор https://javahelp.online/collections/map-v-java-s-primerami
+        //Варианты перебора аналогичны DemoIterator
+        //Помним, что HashMap хранит значения в произвольном порядке, поэтому вывод будет каждый раз в произвольном
+        // порядке.
+        //В данном случае использовался перебор entrySet().
+        // Также можно работать с keySet(), values().
+        for (Map.Entry<String, Person> stringPersonEntry : curHashMap.entrySet()) {
+            System.out.println("key = "+stringPersonEntry.getKey()+"; "+"person = "+stringPersonEntry.getValue());
+        }
+        System.out.println();
+
+        //Сортировка через LinkedList
+        List<Person> persons = new LinkedList<>(curHashMap.values());
+        Collections.sort(
+                persons,
+                Comparator.comparing(Person::getLastName).thenComparing(Person::getFirstName)
+        );
+        System.out.println("Сортировка по ФИ LinkedList:");
+        System.out.println(persons.toString());
+        System.out.println();
+
+        //Сортировка через SortedMap
+        //Интерфейс SortedМap расширяет Мар. Упорядочивает элементы по ключу. По умолчанию в порядке возрастания.
+        // Упорядочивания по значению нет.
+        //Реализует этот интерйфес класс TreeMap.
+        // https://javahelp.online/collections/java-sortedmap
+        // Нулевой ключ или нулевое значение недопустимы. http://espressocode.top/sortedmap-java-examples/
+        // https://www.examclouds.com/ru/java/java-core-russian/map
+        System.out.println("Сортировка SortedMap:");
+        //Конструкторы класса TreeMap TreeMap(Map<? extends K, ? extends V> m)
+        SortedMap sortedMap = new TreeMap(curHashMap);
+        System.out.println(sortedMap);
+
+        //Можно переопредять Comparator
+        System.out.println("Сортировка SortedMap (обратно):");
+        //Конструкторы класса TreeMap TreeMap(Comparator<? super К> comparator)
+        SortedMap<String,Person> reversSortedMap = new TreeMap<String, Person>(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o2.compareTo(o1);
+            }
+        });
+        reversSortedMap.putAll(curHashMap);
+        System.out.println(reversSortedMap);
+
+        //Сортировка через SortedSet
+        System.out.println("Сортировка TreeSet по возрасту:");
+        SortedSet<Person> reversAgeSortedSet = new TreeSet<>(new Comparator<Person>() {
+            @Override
+            //Для использования compareTo int нужно привести к Integer
+            public int compare(Person o1, Person o2) {
+                return ((Integer) o1.getAge()).compareTo((Integer) o2.getAge());
+            }
+        });
+        reversAgeSortedSet.addAll(curHashMap.values());
+        System.out.println(reversAgeSortedSet);
+
+        //Сортировка через TreeSet
+        System.out.println("Сортировка TreeSet по возрасту (обратно):");
+        TreeSet<Person> reversAgeTreeSet = new TreeSet<>(new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                //Вместо compareTo можно также реализовать через разницу
+                return o2.getAge()-o1.getAge();
+            }
+        });
+        reversAgeTreeSet.addAll(curHashMap.values());
+        System.out.println(reversAgeTreeSet);
     }
 }
