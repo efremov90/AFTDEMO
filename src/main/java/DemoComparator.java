@@ -34,12 +34,25 @@ public class DemoComparator {
         System.out.println("До сортировки:");
         System.out.println(persons.toString());
 
-        //Через отдельно объявленный PersonComparatorGenderDescription
+        //Через отдельно объявленный класс PersonComparatorGenderDescription, реализующий Comparator
         Collections.sort(
                 persons,
                 new PersonComparatorGenderDescription()
         );
-        System.out.println("Сортировка по полу:");
+        System.out.println("Сортировка по полу:отдельно объявленный класс:");
+        System.out.println(persons.toString());
+
+        //Через создание и объявление Comparator сразу в методе sort
+        Collections.sort(
+                persons,
+                new Comparator<Person>() {
+                    @Override
+                    public int compare(Person o1, Person o2) {
+                        return o1.getGender().getDescription().compareTo(o2.getGender().getDescription());
+                    }
+                }
+        );
+        System.out.println("Сортировка по полу:объявление в методе sort:");
         System.out.println(persons.toString());
 
         //Через lyambda, т.е. анонимный метод аналогичный compare в PersonComparatorGenderDescription
