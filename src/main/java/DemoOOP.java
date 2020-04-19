@@ -63,6 +63,7 @@ class Point {
         this.y = y;
     }
 
+    //Можно автоматически сгенерить также как set и get через Контекстное меню->Generate
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -157,6 +158,7 @@ public class DemoOOP {
 
         //equals, hashcode https://javarush.ru/groups/posts/2179-metodih-equals--hashcode-praktika-ispoljhzovanija
         //прочитать до КОНЦА https://habr.com/ru/post/168195/
+        //equals, hashcode можно автоматически сгенерить в классе также как set и get через Контекстное меню->Generate
         Box b3 = new Box(1,1,1);
         Box b4 = new Box(1,1,1);
         System.out.println("b3==b4: "+(b3==b4));
