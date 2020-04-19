@@ -7,45 +7,48 @@ import java.util.Stack;
 //Список https://ru.wikipedia.org/wiki/Связный_список#Линейный_связный_список
 // Я тут опытался реализовать аналог LinkedList из Java, см. описание LinkedList в DemoLinkedList
 
-//Элемент списка
-class MyElmList {
-    private Object Data;
+//MyElmList Элемент списка
+//Сначала писал без Generic (<>), у Data тип был Object. Потом переписал на Generic (когда разобрался с DemoLinkedList),
+// что более правильно. Demo для Generic будет позже, пока и так интуитивно понятно как применяется.
+//MyTree остался через Object.
+class MyElmList<D> {
+    private D Data;
     //можно реализовать только через NextElmList, но двухсвязанный список упрощает работу
-    private MyElmList NextElmList, PrevElmList;
+    private MyElmList<D> NextElmList, PrevElmList;
 
-    public MyElmList(Object data, MyElmList prevElmList, MyElmList nextElmList) {
+    public MyElmList(D data, MyElmList prevElmList, MyElmList nextElmList) {
         Data = data;
         PrevElmList = prevElmList;
         NextElmList = nextElmList;
     }
 
-    public Object getData() {
+    public D getData() {
         return Data;
     }
 
-    public MyElmList getPrevElmList() {
+    public MyElmList<D> getPrevElmList() {
         return PrevElmList;
     }
 
-    public MyElmList getNextElmList() {
+    public MyElmList<D> getNextElmList() {
         return NextElmList;
     }
 
-    public void setPrevElmList(MyElmList prevElmList) {
+    public void setPrevElmList(MyElmList<D> prevElmList) {
         PrevElmList = prevElmList;
     }
 
-    public void setNextElmList(MyElmList nextElmList) {
+    public void setNextElmList(MyElmList<D> nextElmList) {
         NextElmList = nextElmList;
     }
 }
 
 //Список
-class MyList {
+class MyList<D> {
     private int count = 0; //количество элементов
-    private MyElmList firstElm; //в очередях есть еще endElm, чтобы добавлять/извлекать сразу в/из конец
+    private MyElmList<D> firstElm; //в очередях есть еще endElm, чтобы добавлять/извлекать сразу в/из конец
 
-    public MyList(Object data) {
+    public MyList(D data) {
         this.firstElm = new MyElmList(data, null, null);
         this.count = 1;
     }
@@ -57,8 +60,8 @@ class MyList {
     //получение элемента списка по индексу
     //private для использования внутри
     //индекса нет в MyElmList: он не нужен, иначе при добавлении/удалении придется пересчитывать у остальных
-    private MyElmList getElmList(int index) {
-        MyElmList cur = firstElm;
+    private MyElmList<D> getElmList(int index) {
+        MyElmList<D> cur = firstElm;
         for (int i = 1; i <= count; i++) {
             if (i == index) return cur;
             else cur = cur.getNextElmList();
@@ -68,37 +71,37 @@ class MyList {
 
     //получение данных элемента по индексу
     //public для использования вне
-    public Object get(int index) {
-        MyElmList cur;
+    public D get(int index) {
+        MyElmList<D> cur;
         cur = this.getElmList(index);
         if (cur != null) return cur.getData();
         else return null;
     }
 
     //добавление элемента в список
-    public boolean add(int index, Object data) {
+    public boolean add(int index, D data) {
         try {
             if (index > count + 1)
                 throw new IllegalArgumentException("Позиция вставки " + index + " превышает допустимое значение " + (count + 1));
             if (index < 1) throw new IllegalArgumentException("Позиция вставки " + index + " меньше минимальной 1");
             //вставка в начало
             if (index == 1) {
-                MyElmList temp = firstElm;
+                MyElmList<D> temp = firstElm;
                 firstElm = new MyElmList(data, null, temp);
                 temp.setPrevElmList(firstElm);
             }
             //вставка в середину (текущий cur сдвигается вперед next)
             if ((index > 1) && (index < count + 1)) {
-                MyElmList tempCur = getElmList(index);
-                MyElmList tempPrev = tempCur.getPrevElmList();
-                MyElmList tempNew = new MyElmList(data, tempPrev, tempCur);
+                MyElmList<D> tempCur = getElmList(index);
+                MyElmList<D> tempPrev = tempCur.getPrevElmList();
+                MyElmList<D> tempNew = new MyElmList(data, tempPrev, tempCur);
                 tempPrev.setNextElmList(tempNew);
                 tempCur.setPrevElmList(tempNew);
             }
             //вставка в конец
             if (index == count + 1) {
-                MyElmList temp = getElmList(count); //получаем последний элемент
-                MyElmList endElm = new MyElmList(data, temp, null);
+                MyElmList<D> temp = getElmList(count); //получаем последний элемент
+                MyElmList<D> endElm = new MyElmList(data, temp, null);
                 temp.setNextElmList(endElm);
             }
             //увеличиваем количество элементов
@@ -112,7 +115,7 @@ class MyList {
 
     @Override
     public String toString() {
-        MyElmList cur = firstElm;
+        MyElmList<D> cur = firstElm;
         String str = "MyList{";
         for (int i = 1; i <= count; i++) {
             str = str + "{" + cur.getData().toString() + "}";
@@ -135,6 +138,13 @@ class MyList {
  У всех узлов правого поддерева произвольного узла X значения ключей данных больше либо равны,
  нежели значение ключа данных самого узла X.
  p.s. я запретил вставлять с одинаковым ключом, т.е. последнее условие звучит как просто "больше"
+
+ Для чего это всё: чтобы понимать, что такое деревья, как они примерно реализованы.
+ Если структура ещё довольно просто улкадывается в голове, глядя на картинки, то вот алгоритмы вставки, поиска и
+ обхода сложнее чем в списках. В особенности алгоритм обхода (см. toString), реализуемый не через рекурсию, а через
+ цикл, поскольку минус рекурсии - это ограниченность по вложенности вызова, связанное с переполнением памяти. Каждый
+  новый вложенный вызов требует выделение памяти под те же самые переменные, а возврат памяти будет происходить только
+  когда рекурсия пойдет в обратную сторону, завершаясь.
 */
 
 //Узел
@@ -385,7 +395,7 @@ public class DemoMyCollection {
     public static void main(String[] args) {
         try {
             System.out.println("MyList:");
-            MyList ml = new MyList(30);
+            MyList<Integer> ml = new MyList(30);
             System.out.println("Создание списка 30: " + ml.toString());
             ml.add(1, 10);
             System.out.println("add 10 в начало: " + ml.toString());
