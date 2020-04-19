@@ -1,7 +1,8 @@
 package main.java;
 
-import java.util.HashSet;
+import java.util.*;
 
+import static main.java.GenderType.FEMALE;
 import static main.java.GenderType.MALE;
 
 /*
@@ -32,24 +33,43 @@ TreeSet хранит элементы отсортированными.
 */
 public class DemoHashSet {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
 
-        //Инициирование HashSet
-        HashSet<Person> curArrayListPerson = new HashSet<>();
+        HashSet<Person> curHashSet = new HashSet<>();
         //Добавление элементов с созданием при вызове
-        //add без указания индекса добавляет в конец
-        curArrayListPerson.add(new Person("Имя1", "Фамилия1", MALE));
+        curHashSet.add(new Person("Имя1", "Фамилия1", "N1",MALE,30));
         //заранее созданных, полученных откуда-либо
-        Person P2 = new Person("Имя2", "Фамилия2", MALE);
-        curArrayListPerson.add(P2);
-        //Можно добавлять дубли. При этом при первом удалении remove один удалится, при втором следующий
-        //Добавил на позицию 0
-        curArrayListPerson.add(new Person("Имя2", "Фамилия2", MALE));
+        Person P2 = new Person("Имя2", "Фамилия2", "N2",FEMALE,31);
+        curHashSet.add(P2);
+        //При добавлении дубля элемент не добавляется
+        curHashSet.add(new Person("Имя1", "Фамилия1", "N1",MALE,30));
         //Вывод
-        System.out.println("curArrayListPerson add1, add2, add2: "+curArrayListPerson.toString());
-        //Получение элемента по индексу (как и в массиве нумерация с 0)
-        System.out.println("get(2): "+curArrayListPerson.toString());
-        //set(int index, E obj) естественно нужно указывать в какой позиции index нужно задать obj
-        //remove(int index), remove(E obj) работает либо по индексту, либо по объекту
+        System.out.println("curHashMap put, put, put: "+curHashSet.toString());
+
+        //contains(Object o) возвращает true, если o является элементом вызывающей коллекции
+        //также как и во всех коллекциях
+        System.out.println("curHashMap.containsKey('N2'): "+curHashSet.contains(new Person("Имя1", "Фамилия1", "N1",MALE,30)));
+
+        //Перебор https://javahelp.online/collections/map-v-java-s-primerami
+        //Варианты перебора аналогичны DemoIterator
+        //Помним, что HashMap хранит значения в произвольном порядке, поэтому вывод будет каждый раз в произвольном
+        // порядке.
+        //В данном случае использовался перебор entrySet().
+        // Также можно работать с keySet(), values().
+        for (Person person : curHashSet) {
+            System.out.println("person = "+curHashSet.toString());
+        }
+        System.out.println();
+
+        //Сортировка через LinkedList
+        List<Person> persons = new LinkedList<>(curHashSet);
+        Collections.sort(
+                persons,
+                Comparator.comparing(Person::getLastName).thenComparing(Person::getFirstName)
+        );
+        System.out.println("Сортировка по ФИ LinkedList:");
+        System.out.println(persons.toString());
+        System.out.println();
+
+        //Использование SortedSet см. в DemoHashMap
     }
 }
