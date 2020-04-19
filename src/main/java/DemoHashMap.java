@@ -70,6 +70,8 @@ ConcurrentHashMap Многопоточный аналог HashMap. Все дан
 Полезные ссылки при подготовке к собеседованию
 http://javastudy.ru/interview/collections/
 https://itnan.ru/post.php?c=1&p=314386
+https://itvdn.com/ru/blog/article/jjd
+
 */
 
 import java.util.*;
