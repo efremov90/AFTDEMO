@@ -5,19 +5,21 @@ import java.util.*;
 import static main.java.GenderType.FEMALE;
 import static main.java.GenderType.MALE;
 
+//Поскольку пока был изучен только ArrayList, то на TreeSet, TreeMap пока не обращать внимание, принцип использование
+// Comparator'а везде одинаковый, может отличаться только метод, в который необходимо его передавать
 //https://www.examclouds.com/java/java-core-russian/interface-comparator
 //https://metanit.com/java/tutorial/5.6.php
 //http://java-online.ru/blog-comparator.xhtml
 
-//класс реализует интерфейс Comparator для Person
+//Класс реализует интерфейс Comparator для Person.
 class PersonComparatorGenderDescription implements Comparator<Person> {
 
-    //переопределен метод
+    //Переопределен метод
     @Override
     public int compare(Person o1, Person o2) {
-        //в return используется compareTo - см. http://java-online.ru/blog-comparator.xhtml
+        //В return используется compareTo - см. http://java-online.ru/blog-comparator.xhtml
         return o1.getGender().getDescription().compareTo(o2.getGender().getDescription());
-        //если нужно реализовывть сложную логику сравнения, то можно реализовать самому без compareTo самостоятельно,
+        //Если нужно реализовывть сложную логику сравнения, то можно реализовать самому без compareTo самостоятельно,
         //например, как для SortedByPrice  см. http://java-online.ru/blog-comparator.xhtml
     }
 }
@@ -87,8 +89,8 @@ public class DemoComparator {
         System.out.println("Сортировка по полу:Method References:");
         System.out.println(persons.toString());
 
-        //thenComparing  позволяет использовать цепочки компараторов для сортировки набора
-        //в данном случае сначала сортировка по фамилии, затем по имени
+        //thenComparing  позволяет использовать цепочки компараторов для сортировки набора.
+        //В данном случае сначала сортировка по фамилии, затем по имени
         Collections.sort(
                 persons,
                 Comparator.comparing(Person::getLastName).thenComparing(Person::getFirstName)

@@ -50,7 +50,7 @@ public class DemoString {
         System.out.println("trim: "+"    Hello World ".trim());
         System.out.println();
 
-        //полезные функции
+        //Полезные функции
         String[] wordsArray = {"one", "two", "three"};
         String wordsString = String.join(";", wordsArray);
         System.out.println("join words (Array to String): "+wordsString);

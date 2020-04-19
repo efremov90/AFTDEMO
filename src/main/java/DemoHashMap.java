@@ -2,7 +2,7 @@ package main.java;
 
 /*
 HashMap https://vertex-academy.com/tutorials/ru/map-v-java-hashmap/
-http://java-online.ru/java-map.xhtml
+http://java-online.ru/java-map.xhtml Держать в уме, что Hashtable считается устаревшим
 https://devcolibri.com/hashmap-и-hashset-что-это-на-самом-деле/
 https://javahelp.online/collections/map-v-java-s-primerami
 https://www.examclouds.com/ru/java/java-core-russian/map
@@ -66,7 +66,10 @@ http://javastudy.ru/interview/collections/
 ConcurrentHashMap Многопоточный аналог HashMap. Все данные делятся на отдельные сегменты и блокируются только
 отдельные сегменты при изменении, что позволяет значительно ускорить работу в многопоточном
 режиме. https://itnan.ru/post.php?c=1&p=314386
+
+Полезные ссылки при подготовке к собеседованию
 http://javastudy.ru/interview/collections/
+https://itnan.ru/post.php?c=1&p=314386
 */
 
 import java.util.*;

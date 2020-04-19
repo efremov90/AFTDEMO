@@ -63,7 +63,7 @@ class Point {
         this.y = y;
     }
 
-    //Можно автоматически сгенерить также как set и get через Контекстное меню->Generate
+    //Можно автоматически добавить как set и get через Контекстное меню->Generate
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,7 +75,7 @@ class Point {
 
     @Override
     public int hashCode() {
-        //как выячисляется hashCode можно узнать провалившись по hash в Object, а потом еще hashCode в Array:
+        //как вычисляется hashCode можно узнать провалившись по hash в Object, а потом еще hashCode в Array:
         //result = 31 * result + (element == null ? 0 : element.hashCode());
         return Objects.hash(getX(), getY());
     }

@@ -5,7 +5,7 @@ import java.util.Stack;
 //Структуры данных https://www.examclouds.com/ru/java/java-core-russian/collections-russian
 
 //Список https://ru.wikipedia.org/wiki/Связный_список#Линейный_связный_список
-// Я тут опытался реализовать аналог LinkedList из Java, см. описание LinkedList в DemoLinkedList
+// Я тут попытался реализовать аналог LinkedList из Java, см. описание LinkedList в DemoLinkedList
 
 //MyElmList Элемент списка
 //Сначала писал без Generic (<>), у Data тип был Object. Потом переписал на Generic (когда разобрался с DemoLinkedList),

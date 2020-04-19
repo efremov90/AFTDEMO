@@ -23,6 +23,7 @@ public class DemoRegexp {
         // Далее создание matcher-объекта, который будет сопоставлять произвольные последовательности символов
         // с регулярным выражением
         Matcher mtp = TELEPHONE_NUMBER_PATTERN.matcher(input);
+        //! - это логическое отрицание
         if (! mtp.matches()) System.out.println("Некорректный формат " +
                 "телефонного номера.");
 

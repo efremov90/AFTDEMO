@@ -6,8 +6,7 @@ import static main.java.GenderType.FEMALE;
 import static main.java.GenderType.MALE;
 
 /*
-Collection знакомство
-https://www.examclouds.com/ru/java/java-core-russian/interface-collection
+Collection знакомство https://www.examclouds.com/ru/java/java-core-russian/interface-collection
 https://www.examclouds.com/ru/java/java-core-russian/collections-russian
 
 List знакомство https://www.examclouds.com/ru/java/java-core-russian/interface-list
