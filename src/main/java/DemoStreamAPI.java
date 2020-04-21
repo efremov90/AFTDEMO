@@ -5,6 +5,7 @@ import java.util.*;
 import static main.java.GenderType.FEMALE;
 import static main.java.GenderType.MALE;
 
+//Stream API https://habr.com/ru/company/luxoft/blog/270383/
 public class DemoStreamAPI {
     public static void main(String[] args) {
         List<Person> curArrayListPerson = new ArrayList<>();
