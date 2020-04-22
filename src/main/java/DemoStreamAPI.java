@@ -129,12 +129,16 @@ public class DemoStreamAPI {
         System.out.println(
                 //Arrays.toString возвращает строковое представление массива, см. DemoArrayAndCycle
                 Arrays.toString(
-                        //List.of позволяет создать ArrayList сразу с заданием наполнения без add
+                        //List.of позволяет преобразовывать Array в ArrayList
+                        // массива
                         List.of("1;2;0", "4;5").stream()
-                    //преобразовываем строки в массив через split, см. DemoString
-                    .flatMap(x->Arrays.asList(x.split(";")).stream())
-                    //получаем массив
-                    .toArray(String[]::new)
+                        //Преобразовываем строки в массив через split, см. DemoString.
+                        //flatMap похож на метод map, но может создавать из одного элемента несколько
+                        //В данном случае получается для каждой записи ArrayList происходит создание ещё на несколько
+                        //посредством преобразования строки в массив
+                        .flatMap(x->List.of(x.split(";")).stream())
+                        //получаем массив
+                        .toArray(String[]::new)
                 )
         );
         System.out.println();
