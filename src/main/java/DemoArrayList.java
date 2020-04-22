@@ -104,5 +104,6 @@ public class DemoArrayList {
 
         //Сортировку можно посмотреть в DemoComparator
 
+        //Почитать про нюансы преобразования Array в ArryList https://habr.com/ru/company/epam_systems/blog/476098/
     }
 }

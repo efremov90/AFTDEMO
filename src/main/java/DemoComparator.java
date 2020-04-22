@@ -101,7 +101,7 @@ public class DemoComparator {
         //Сортировка по ФИ в обратном порядке:
         Collections.sort(
                 persons,
-                //Для сортировки в обратном порядке нужно поменять местами с o1.compareTo(o2) на o2.compareTo(o1)
+                //Для сортировки в обратном нужно сравнивать o2 с o1
                 //thenComparing - это аналог "+" через compareTo
                 (Person o1,Person o2)->((o2.getLastName().compareTo(o1.getLastName()))
                         +(o2.getFirstName().compareTo(o1.getFirstName())))

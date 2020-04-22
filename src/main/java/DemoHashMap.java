@@ -72,6 +72,7 @@ http://javastudy.ru/interview/collections/
 https://itnan.ru/post.php?c=1&p=314386
 https://itvdn.com/ru/blog/article/jjd
 
+Нюансы работы с коллекциями и массивами https://javarush.ru/groups/posts/855-10-oshibok-zachastuju-dopuskaemihkh-java-razrabotchikami
 */
 
 import java.util.*;
@@ -122,7 +123,7 @@ public class DemoHashMap {
         }
         System.out.println();
 
-        //Сортировка через LinkedList
+        //Сортировка через LinkedList аналогично DemoComparator
         List<Person> persons = new LinkedList<>(curHashMap.values());
         Collections.sort(
                 persons,
@@ -147,19 +148,20 @@ public class DemoHashMap {
         SortedMap sortedMap = new TreeMap(curHashMap);
         System.out.println(sortedMap);
 
-        //Можно переопредять Comparator
+        //Можно переопредять Comparator, см. DemoComparator
         System.out.println("Сортировка SortedMap (обратно):");
         //Используется конструктор класса TreeMap TreeMap(Comparator<? super К> comparator)
-        SortedMap<String,Person> reversSortedMap = new TreeMap<String, Person>(new Comparator<String>() {
+        SortedMap<String,Person> descSortedMap = new TreeMap<String, Person>(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
+                //Для обратного порядка нужно o2 сравнивать с o1
                 return o2.compareTo(o1);
             }
         });
-        reversSortedMap.putAll(curHashMap);
-        System.out.println(reversSortedMap);
+        descSortedMap.putAll(curHashMap);
+        System.out.println(descSortedMap);
         //У SortedMap есть дополнительные методы: firstKey, lastKey http://espressocode.top/sortedmap-java-examples/
-        System.out.println("lastKey() = "+reversSortedMap.lastKey()+"; get(lastKey()) = "+reversSortedMap.get(reversSortedMap.lastKey()));
+        System.out.println("lastKey() = "+descSortedMap.lastKey()+"; get(lastKey()) = "+descSortedMap.get(descSortedMap.lastKey()));
         //Также еще есть методы headMap, tailMap, subMap
 
         //Сортировка через SortedSet http://espressocode.top/sortedset-java-examples/
@@ -169,29 +171,27 @@ public class DemoHashMap {
         //В остальном аналогично описанию SortedМap, см. выше
         // https://javahelp.online/collections/sortedset-v-java
         System.out.println("Сортировка SortedSet по возрасту:");
-        SortedSet<Person> reversAgeSortedSet = new TreeSet<>(new Comparator<Person>() {
+        SortedSet<Person> ascAgeTreeSet = new TreeSet<>(new Comparator<Person>() {
             @Override
-            //Для использования compareTo int нужно привести к Integer
             public int compare(Person o1, Person o2) {
-                return ((Integer) o1.getAge()).compareTo((Integer) o2.getAge());
+                //Вместо compareTo можно также реализовать через разницу
+                return o1.getAge()-o2.getAge();
             }
         });
-        reversAgeSortedSet.addAll(curHashMap.values());
-        System.out.println(reversAgeSortedSet);
+        ascAgeTreeSet.addAll(curHashMap.values());
+        System.out.println(ascAgeTreeSet);
         //У SortedSet есть дополнительные методы: first(), last() http://espressocode.top/sortedset-java-examples/
-        System.out.println("last() = "+reversAgeSortedSet.last());
+        System.out.println("last() = "+ascAgeTreeSet.last());
         //Также еще есть методы headSet, tailSet, subSet
 
         //Сортировка через SortedSet
         System.out.println("Сортировка SortedSet по возрасту (обратно):");
-        TreeSet<Person> reversAgeTreeSet = new TreeSet<>(new Comparator<Person>() {
-            @Override
-            public int compare(Person o1, Person o2) {
-                //Вместо compareTo можно также реализовать через разницу
-                return o2.getAge()-o1.getAge();
-            }
-        });
-        reversAgeTreeSet.addAll(curHashMap.values());
-        System.out.println(reversAgeTreeSet);
+        //Через lyambda, см. DemoComparator
+        SortedSet<Person> descAgeSortedSet = new TreeSet<>(
+                //Для использования compareTo int нужно привести к Integer
+                (Person o1,Person o2)->((Integer) o2.getAge()).compareTo((Integer) o1.getAge())
+        );
+        descAgeSortedSet.addAll(curHashMap.values());
+        System.out.println(descAgeSortedSet);
     }
 }
