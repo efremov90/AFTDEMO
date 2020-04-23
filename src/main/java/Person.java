@@ -74,6 +74,7 @@ public class Person {
     }
 
     //Из DemoOOP помним, что нужно определять equals и hashCode
+    //equals и hashCode также добавляются автоматически
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,7 +93,7 @@ public class Person {
     }
 
     //https://www.examclouds.com/ru/java/java-core-russian/method-tostring
-    //также через автометически можно добавить toString для вывода информации об объекте
+    //также можно автоматически добавить toString для вывода информации об объекте
     //метод переопределил, чтобы вместо английских названий полей, выводились русские
     @Override
     public String toString() {

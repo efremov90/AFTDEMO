@@ -18,7 +18,7 @@ https://www.examclouds.com/ru/java/java-core-russian/interface-queue
 Обязательно:
 Ответы https://ru.stackoverflow.com/questions/568119/Отличие-arraylist-от-linkedlist
 Перый абзац https://habr.com/ru/post/262943/
-без видео и комментариев https://vk.com/topic-68704273_30860436
+Без видео и комментариев https://vk.com/topic-68704273_30860436
 
 Сложность ArrayList и LinkedList см. DemoArrayList
 

@@ -2,7 +2,7 @@ package main.java;
 
 /*
 HashMap https://vertex-academy.com/tutorials/ru/map-v-java-hashmap/
-http://java-online.ru/java-map.xhtml
+http://java-online.ru/java-map.xhtml Держать в уме, что Hashtable считается устаревшим
 https://devcolibri.com/hashmap-и-hashset-что-это-на-самом-деле/
 https://javahelp.online/collections/map-v-java-s-primerami
 https://www.examclouds.com/ru/java/java-core-russian/map
@@ -56,7 +56,7 @@ HashMap - хранит значения в произвольном порядк
 LinkedHashMap - хранит значения в порядке добавления, но работает медленнее и занимает больше места (кроме самого
 элемента хранятся еще указатели на следующий и предыдущий элементы списка).
 TreeMap - сама сортирует значения по заданному критерию. TreeMap используется либо с Comparable элементами, либо в
-связке с Comparator.
+связке с Comparator. https://javarush.ru/groups/posts/2584-osobennosti-treemap
 TreeMap реализован на красно-черном дереве https://ru.wikipedia.org/wiki/Красно-чёрное_дерево
 
 Hashtable считается устаревшим. Новый синхронный потокобезопасный вариант это ConcurrentHashMap.
@@ -66,7 +66,13 @@ http://javastudy.ru/interview/collections/
 ConcurrentHashMap Многопоточный аналог HashMap. Все данные делятся на отдельные сегменты и блокируются только
 отдельные сегменты при изменении, что позволяет значительно ускорить работу в многопоточном
 режиме. https://itnan.ru/post.php?c=1&p=314386
+
+Полезные ссылки при подготовке к собеседованию
 http://javastudy.ru/interview/collections/
+https://itnan.ru/post.php?c=1&p=314386
+https://itvdn.com/ru/blog/article/jjd
+
+Нюансы работы с коллекциями и массивами https://javarush.ru/groups/posts/855-10-oshibok-zachastuju-dopuskaemihkh-java-razrabotchikami
 */
 
 import java.util.*;
@@ -95,7 +101,7 @@ public class DemoHashMap {
         System.out.println("get('N2'): "+curHashMap.get("N2"));
 
         //containsKey(Object key) возвращает true, если key является элементом вызывающей коллекции
-        //также как и во всех кол
+        //также как и во всех коллекциях
         System.out.println("curHashMap.containsKey('N2'): "+curHashMap.containsKey("N2"));
 
         //Получение ключей записей в виде коллекции Set<K>
@@ -117,7 +123,7 @@ public class DemoHashMap {
         }
         System.out.println();
 
-        //Сортировка через LinkedList
+        //Сортировка через LinkedList аналогично DemoComparator
         List<Person> persons = new LinkedList<>(curHashMap.values());
         Collections.sort(
                 persons,
@@ -127,52 +133,65 @@ public class DemoHashMap {
         System.out.println(persons.toString());
         System.out.println();
 
-        //Сортировка через SortedMap
+        //Сортировка через SortedMap http://espressocode.top/sortedmap-java-examples/
         //Интерфейс SortedМap расширяет Мар. Упорядочивает элементы по ключу. По умолчанию в порядке возрастания.
-        // Упорядочивания по значению нет.
-        //Реализует этот интерйфес класс TreeMap.
+        // Упорядочивания по значению нет. При использовании в качестве ключа String, Integer и т.п. используется их
+        // базовый Comparator. Для своих классов нужно обязательно определять свой Comparator, иначе будет ошибка:
+        // java.lang.ClassCastException: class main.java.Person cannot be cast to class java.lang.Comparable
+        // Нулевой ключ или нулевое значение недопустимы.
+        // Реализует этот интерфейс класс TreeMap.
         // https://javahelp.online/collections/java-sortedmap
-        // Нулевой ключ или нулевое значение недопустимы. http://espressocode.top/sortedmap-java-examples/
-        // https://www.examclouds.com/ru/java/java-core-russian/map
         System.out.println("Сортировка SortedMap:");
-        //Конструкторы класса TreeMap TreeMap(Map<? extends K, ? extends V> m)
+        //Используется конструктор класса TreeMap TreeMap(Map<? extends K, ? extends V> m)
+        //Поскольку ключом у curHashMap является String, то сортировка автоматически будет по реализованному в нём
+        // Comparator'у
         SortedMap sortedMap = new TreeMap(curHashMap);
         System.out.println(sortedMap);
 
-        //Можно переопредять Comparator
+        //Можно переопредять Comparator, см. DemoComparator
         System.out.println("Сортировка SortedMap (обратно):");
-        //Конструкторы класса TreeMap TreeMap(Comparator<? super К> comparator)
-        SortedMap<String,Person> reversSortedMap = new TreeMap<String, Person>(new Comparator<String>() {
+        //Используется конструктор класса TreeMap TreeMap(Comparator<? super К> comparator)
+        SortedMap<String,Person> descSortedMap = new TreeMap<String, Person>(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
+                //Для обратного порядка нужно o2 сравнивать с o1
                 return o2.compareTo(o1);
             }
         });
-        reversSortedMap.putAll(curHashMap);
-        System.out.println(reversSortedMap);
+        descSortedMap.putAll(curHashMap);
+        System.out.println(descSortedMap);
+        //У SortedMap есть дополнительные методы: firstKey, lastKey http://espressocode.top/sortedmap-java-examples/
+        System.out.println("lastKey() = "+descSortedMap.lastKey()+"; get(lastKey()) = "+descSortedMap.get(descSortedMap.lastKey()));
+        //Также еще есть методы headMap, tailMap, subMap
 
-        //Сортировка через SortedSet
-        System.out.println("Сортировка TreeSet по возрасту:");
-        SortedSet<Person> reversAgeSortedSet = new TreeSet<>(new Comparator<Person>() {
-            @Override
-            //Для использования compareTo int нужно привести к Integer
-            public int compare(Person o1, Person o2) {
-                return ((Integer) o1.getAge()).compareTo((Integer) o2.getAge());
-            }
-        });
-        reversAgeSortedSet.addAll(curHashMap.values());
-        System.out.println(reversAgeSortedSet);
-
-        //Сортировка через TreeSet
-        System.out.println("Сортировка TreeSet по возрасту (обратно):");
-        TreeSet<Person> reversAgeTreeSet = new TreeSet<>(new Comparator<Person>() {
+        //Сортировка через SortedSet http://espressocode.top/sortedset-java-examples/
+        //Про HashSet см. DemoHashSet
+        //Здесь за одно будет сразу показана работа с SortedSet
+        //Реализует этот интерфейс класс TreeSet.
+        //В остальном аналогично описанию SortedМap, см. выше
+        // https://javahelp.online/collections/sortedset-v-java
+        System.out.println("Сортировка SortedSet по возрасту:");
+        SortedSet<Person> ascAgeTreeSet = new TreeSet<>(new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
                 //Вместо compareTo можно также реализовать через разницу
-                return o2.getAge()-o1.getAge();
+                return o1.getAge()-o2.getAge();
             }
         });
-        reversAgeTreeSet.addAll(curHashMap.values());
-        System.out.println(reversAgeTreeSet);
+        ascAgeTreeSet.addAll(curHashMap.values());
+        System.out.println(ascAgeTreeSet);
+        //У SortedSet есть дополнительные методы: first(), last() http://espressocode.top/sortedset-java-examples/
+        System.out.println("last() = "+ascAgeTreeSet.last());
+        //Также еще есть методы headSet, tailSet, subSet
+
+        //Сортировка через SortedSet
+        System.out.println("Сортировка SortedSet по возрасту (обратно):");
+        //Через lyambda, см. DemoComparator
+        SortedSet<Person> descAgeSortedSet = new TreeSet<>(
+                //Для использования compareTo int нужно привести к Integer
+                (Person o1,Person o2)->((Integer) o2.getAge()).compareTo((Integer) o1.getAge())
+        );
+        descAgeSortedSet.addAll(curHashMap.values());
+        System.out.println(descAgeSortedSet);
     }
 }
