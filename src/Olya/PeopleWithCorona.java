@@ -1,5 +1,5 @@
 package Olya;
-import java.util.ArrayList;
+/* import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -25,51 +25,20 @@ public class PeopleWithCorona {
         cities.put("11", "Республика Марий Эл");
         cities.put("12", "Республика Мордовия");
 
-        // Для каждого города (s<код субъекта РФ>)  веду расширяемый список имен больных
-        ArrayList<String> s07 = new ArrayList<>();
-        {
-            s07.add("РОР");
-            s07.add("ДДЛ");
-            s07.add("HHH");
-            s07.add("РОH");
-            s07.add("РОП");
-            s07.add("АОР");
-        }
+        //  Расширяемый список имен больных
+        ArrayList<String> FIOsick = new ArrayList<>();
+        FIOsick.add ("UHH");
+        FIOsick.add ("UHS");
+        FIOsick.add ("SHU");
+        FIOsick.add ("KHU");
+        FIOsick.add ("UJU");
+        FIOsick.add ("SDU");
+        FIOsick.add ("KJH");
+        FIOsick.add ("GIU");
+        FIOsick.add ("UHU");
+        FIOsick.add ("JHJ");
 
-        ArrayList<String> s08 = new ArrayList<>();
-        {
-            s08.add("ОРО");
-            s08.add("ЛВЛ");
-            s08.add("ООЯ");
-        }
-
-        ArrayList<String> s02 = new ArrayList<>();
-        {
-            s02.add("ОРВ");
-            s02.add("ДЛД");
-            s02.add("ЩЗЛ");
-            s02.add("ЩФП");
-        }
-
-        ArrayList<String> s03 = new ArrayList<>();
-        {
-            s03.add("ВДФ");
-            s03.add("ЦВВ");
-        }
-
-        ArrayList<String> s05 = new ArrayList<>();
-        {
-            s05.add("ВЛЛ");
-        }
-
-        // Составляю таблицу зараженных субъектов РФ и количеством больных людей для каждого из них
-        HashMap<String, Integer> people = new HashMap<>();
-        people.put("02", s02.size());
-        people.put("03", s03.size());
-        people.put("05", s05.size());
-        people.put("07", s07.size());
-        people.put("08", s08.size());
-
+        
         // Вывожу инфу по количеству больных в каждом субъекте РФ, вводя его код
         System.out.println("Введите код субъекта РФ : ");
         String code = scan.nextLine();
@@ -96,7 +65,9 @@ public class PeopleWithCorona {
         System.out.println("Субъект называется: " + array [i][j]);
 
     }
-}
 
+
+}
+*/
 
 
