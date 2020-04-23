@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import static main.java.GenderType.FEMALE;
 import static main.java.GenderType.MALE;
 
-//Stream API https://habr.com/ru/company/luxoft/blog/270383/
-//https://metanit.com/java/tutorial/10.1.php
+//Stream API https://metanit.com/java/tutorial/10.1.php
+//https://habr.com/ru/company/luxoft/blog/270383/
 public class DemoStreamAPI {
     public static void main(String[] args) {
 
@@ -55,6 +55,7 @@ public class DemoStreamAPI {
                 //есть еще findAny
                 .findFirst()
                 //поскольку findFirst возвращает тип Optional, то чтобы получить Person необходимо вызвать get
+                //https://metanit.com/java/tutorial/10.12.php
                 .get());
         System.out.println();
 
@@ -86,8 +87,8 @@ public class DemoStreamAPI {
         System.out.println("curArrayListPerson: "+curArrayListPerson);
         System.out.println();
 
-        System.out.println("filter: Gender=FEMALE; map: Age; distinct:");
-        System.out.println(curArrayListPerson.stream()
+        System.out.println("filter: Gender=FEMALE; map: Age; distinct; collect:");
+        HashSet<Integer> ageSet = curArrayListPerson.stream()
                 .filter(x->x.getGender().equals(FEMALE))
                 //Получение stream из Age, т.е. из списка Persons получили список Age, т.е. на входе stream может
                 // один тип элементов, а на выходе можно получать другой.
@@ -96,9 +97,9 @@ public class DemoStreamAPI {
                 //Возвращает стрим без дубликатов на основании методов hashCode и equals, поэтому важно чтобы они были
                 // переопределены для собственных классов
                 .distinct()
-                //Получение коллекции Set
-                //Также есть метод toList
-                .collect(Collectors.toSet()));
+                //Получение коллекции HashSet https://metanit.com/java/tutorial/10.6.php
+                .collect(Collectors.toCollection(HashSet::new));
+        System.out.println(ageSet);
         System.out.println();
 
         System.out.println("filter: Gender=FEMALE; map: Age; max:");
@@ -107,19 +108,31 @@ public class DemoStreamAPI {
                 //получение stream из Age
                 .map(Person::getAge)
                 //max принимает Comparator интерфейс
-                //Помним, что (p1,p2)->p1.compareTo(p2) можно написать через Method References: Integer::compareTo
+                //Помним, что (p1,p2)->p1.compareTo(p2) можно написать через Method References: Integer::compare
                 .max((p1,p2)->p1.compareTo(p2))
+                .get());
+        System.out.println();
+
+        System.out.println("filter: Gender=FEMALE; map: Age; reduce(max):");
+        System.out.println(curArrayListPerson.stream()
+                .filter(x->x.getGender().equals(FEMALE))
+                //получение stream из Age
+                .map(Person::getAge)
+                //метод reduce принимает объект BinaryOperator<T>, который представляет функцию, которая принимает два
+                //элемента и выполняет над ними некоторую операцию, возвращая результат. При этом метод reduce сохраняет
+                //результат и затем опять же применяет к этому результату и следующему элементу в наборе бинарную операцию.
+                .reduce((x,y)->(Integer.max(x,y)))
                 .get());
         System.out.println();
 
         System.out.println("filter: Gender=FEMALE; map: Age; average:");
         System.out.println(curArrayListPerson.stream()
                 .filter(x->x.getGender().equals(FEMALE))
-                .map(x->x.getAge())
+                .map(Person::getAge)
                 //Через приведение сразу в map не работает
                 //.map(x->{return (Integer) x.getAge();})
                 //Пришлось как в примере https://habr.com/ru/company/luxoft/blog/270383/
-                //приводить отдельно через mapToInt
+                //приводить отдельно через mapToInt в IntStream
                 .mapToInt(x->(Integer) x)
                 .average()
                 .getAsDouble());

@@ -5,11 +5,19 @@ import java.util.*;
 import static main.java.GenderType.FEMALE;
 import static main.java.GenderType.MALE;
 
-//Поскольку пока был изучен только ArrayList, то на TreeSet, TreeMap пока не обращать внимание, принцип использование
-// Comparator'а везде одинаковый, может отличаться только метод, в который необходимо его передавать
-//https://www.examclouds.com/java/java-core-russian/interface-comparator
-//https://metanit.com/java/tutorial/5.6.php
-//http://java-online.ru/blog-comparator.xhtml
+/*
+Поскольку пока был изучен только ArrayList, то на TreeSet, TreeMap пока не обращать внимание, принцип использование
+ Comparator'а везде одинаковый, может отличаться только метод, в который необходимо его передавать
+https://www.examclouds.com/java/java-core-russian/interface-comparator
+https://metanit.com/java/tutorial/5.6.php
+http://java-online.ru/blog-comparator.xhtml
+
+Интерфейс Comparator - это функциональный интерфейс, который определяет один метод compare, принимающий два
+сравниваемых объекта и возвращающий число (если первый объект больше, возвращается положительное число, иначе
+возвращается отрицательное число). Поэтому вместо конкретной реализации компаратора мы можем передать
+лямбда-вырашение или метод, который соответствует методу compare интерфейса Comparator. Поскольку сравниваются числа,
+ то в метод передается в качестве компаратора статический метод Integer.compare().
+*/
 
 //Класс реализует интерфейс Comparator для Person.
 class PersonComparatorGenderDescription implements Comparator<Person> {
