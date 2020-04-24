@@ -12,10 +12,10 @@ public class DemoStreamAPI {
     public static void main(String[] args) {
 
         List<Person> curArrayListPerson = new ArrayList<>();
-        curArrayListPerson.add(new Person("Имя1", "Фамилия1", "N1",MALE,29));
+        curArrayListPerson.add(new Person("Имя1", "Фамилия1", "N1",FEMALE,29));
         curArrayListPerson.add(new Person("Имя2", "Фамилия2", "N2",MALE,30));
         curArrayListPerson.add(new Person("Имя3", "Фамилия1", "N3",FEMALE,31));
-        curArrayListPerson.add(new Person("Имя4", "Фамилия4", "N4",FEMALE,31));
+        curArrayListPerson.add(new Person("Имя4", "Фамилия4", "N4",MALE,31));
         curArrayListPerson.add(new Person("Имя5", "Фамилия5", "N5",FEMALE,32));
 
         System.out.println("curArrayListPerson:");
@@ -31,7 +31,7 @@ public class DemoStreamAPI {
                 .forEach(System.out::println);
         System.out.println();
 
-        System.out.println("filter: Gender=MALE; limit(2):");
+        System.out.println("filter: Gender=FEMALE; limit(2):");
         curArrayListPerson.stream()
                 //могут быть произвольные условия поиска
                 .filter(x->x.getGender().equals(FEMALE))
@@ -41,7 +41,7 @@ public class DemoStreamAPI {
                 .forEach(System.out::println);
         System.out.println();
 
-        System.out.println("filter: Gender=MALE; sorted: Age desc:");
+        System.out.println("sorted: Age desc:");
         curArrayListPerson.stream()
                 //sorted принимает Comparator интерфейс
                 .sorted((p1,p2)->((Integer) p2.getAge()).compareTo((Integer) p1.getAge()))
@@ -98,8 +98,13 @@ public class DemoStreamAPI {
                 // переопределены для собственных классов
                 .distinct()
                 //Получение коллекции HashSet https://metanit.com/java/tutorial/10.6.php
+                //toCollection реализует добавление элемента в коллекцию и возвращение новой коллекции с добавленным элементом.
+                //Поскольку в stream перебираются все элементы, то в итоге будет возвращена коллекция, в которую
+                // будут добавлены все элементы stream
                 .collect(Collectors.toCollection(HashSet::new));
-        System.out.println(ageSet);
+        TreeSet<Integer> sortedAgeSet = new TreeSet<>(Integer::compareTo);
+        sortedAgeSet.addAll(ageSet);
+        System.out.println(sortedAgeSet);
         System.out.println();
 
         System.out.println("filter: Gender=FEMALE; map: Age; max:");
@@ -139,21 +144,46 @@ public class DemoStreamAPI {
         System.out.println();
 
         System.out.println("flatMap:");
-        System.out.println(
-                //Arrays.toString возвращает строковое представление массива, см. DemoArrayAndCycle
-                Arrays.toString(
-                        //List.of позволяет преобразовывать Array в ArrayList
-                        // массива
-                        List.of("1;2;0", "4;5").stream()
-                        //Преобразовываем строки в массив через split, см. DemoString.
-                        //flatMap похож на метод map, но может создавать из одного элемента несколько
-                        //В данном случае получается для каждой записи ArrayList происходит создание ещё на несколько
-                        //посредством преобразования строки в массив
-                        .flatMap(x->List.of(x.split(";")).stream())
-                        //получаем массив
-                        .toArray(String[]::new)
-                )
-        );
+        //List.of позволяет преобразовывать Array в ArrayList
+        // массива
+        HashSet<Integer> integerHashSet = List.of("1;2;0", "4;5").stream()
+                //Преобразовываем строки в массив через split, см. DemoString.
+                //flatMap похож на метод map, но может создавать из одного элемента несколько
+                //В данном случае получается для каждой записи ArrayList происходит создание ещё на несколько
+                //посредством преобразования строки в массив
+                .flatMap(x->List.of(x.split(";")).stream())
+                .map(x->Integer.valueOf(x))
+                //получаем HashSet
+                .collect(Collectors.toCollection(HashSet::new));
+        TreeSet<Integer> integerTreeSet = new TreeSet<>(Integer::compareTo);
+        integerTreeSet.addAll(integerHashSet);
+        System.out.println(integerTreeSet);
         System.out.println();
+
+        //Группировка https://metanit.com/java/tutorial/10.7.php
+        System.out.println("groupingBy: Gender (до сортировки):");
+        Map<GenderType, List<Person>> personsByGender = curArrayListPerson.stream()
+                .collect(Collectors.groupingBy(Person::getGender));
+        System.out.println(personsByGender);
+        System.out.println("сортировка по возрасту (обратно):");
+        personsByGender.entrySet().stream()
+        .map(x->{
+            x.getValue().sort((o1, o2) -> ((Integer) o2.getAge()).compareTo((Integer) o1.getAge()));
+            return x;
+        })
+        .collect(Collectors.toSet());
+        System.out.println(personsByGender);
+
+        System.out.println("partitioningBy: Gender=MALE:");
+        Map<Boolean, List<Person>> personsByMale = curArrayListPerson.stream()
+                //partitioningBy() делит элементы на группы по принципу, соответствует ли элемент определенному условию
+                .collect(Collectors.partitioningBy(x->x.getGender().equals(MALE)));
+        System.out.println(personsByMale);
+        System.out.println();
+
+        System.out.println("groupingBy: Gender: counting:");
+        Map<GenderType,Long> countPersonsByGender = curArrayListPerson.stream()
+                .collect(Collectors.groupingBy(Person::getGender, Collectors.counting()));
+        System.out.println(countPersonsByGender);
     }
 }
