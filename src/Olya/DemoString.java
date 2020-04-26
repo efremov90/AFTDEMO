@@ -53,6 +53,12 @@ public class DemoString {
             System.out.println(a);
         }
 
+        //Преобразование строки в массив символов
+        String line = "Линия";
+        char [] tochar = new char[line.length()];
+                tochar = line.toCharArray();
+        System.out.println( tochar);
+        System.out.println("Второй символ массива: " + tochar[2]);
 
 
     }
