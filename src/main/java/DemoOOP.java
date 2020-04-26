@@ -175,5 +175,14 @@ public class DemoOOP {
         System.out.println("p1.equals(p2): "+(p1.equals(p2)));
         //одинаковые значения, потому что для Point hashCode Переопределен и вычисляется По Значениям параметров x и y
         System.out.println("p1.hashCode: "+p1.hashCode()+" p2.hashCode: "+p2.hashCode());
+        System.out.println();
+
+        System.out.println("Создание пустого объекта:");
+        //Обратить внимание, что объектные переменные созданы null.
+        // А простые Age int = 0 - не могут быт null, по умолчанию поставляются 0. И если явным образом пытаться
+        // присвоить null, то будет ошибка.
+        //Также обратить внимание на Person.toString, см. класс Person. Там обрабатывается Gender на null, чтобы не
+        // возникало ошибки NullPointerException.
+        System.out.println(new Person());
     }
 }

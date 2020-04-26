@@ -16,6 +16,9 @@ public class Person {
     private GenderType Gender;
     private int Age;
 
+    //Для своих нужд создал конструктор без параметров
+    public Person () { }
+
     //constructor можно добавить автоматически: контекстное меню -> generate ->
     public Person(String firstName, String lastName, GenderType gender) {
         FirstName = firstName;
@@ -101,7 +104,13 @@ public class Person {
                 "Имя=" + FirstName +
                 ", Фамилия=" + LastName +
                 ", №=" + PersonalNumber +
-                ", Пол=" + Gender.getDescription() +
+                //Специально добавил constructor без параметров, т.е. просто Person().
+                //Соответственно при создании объекта без параметров Gender будет null
+                //И при попытке вызвать метод null-объекта возникнет ошибка NullPointerException
+                //https://habr.com/ru/post/221243/
+                //https://docs.oracle.com/javase/7/docs/api/java/lang/NullPointerException.html
+                //Чтобы ошибки не возникало, нужно явно проверять на null и обрабатывать нужным образом
+                ", Пол=" + (Gender==null ? null : Gender.getDescription()) +
                 ", Возраст=" + Age +
                 '}';
     }
