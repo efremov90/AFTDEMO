@@ -28,6 +28,8 @@ public class DemoStreamAPI {
                 //могут быть произвольные условия поиска
                 .filter(x->x.getPersonalNumber()=="N1")
                 //forEach принимает Consumer интерфейс
+                //В данном случае осуществляется просто вывод, примеры с формирование новой коллекции будут ниже
+                //c использованием метода .collect
                 .forEach(System.out::println);
         System.out.println();
 
@@ -76,7 +78,7 @@ public class DemoStreamAPI {
         System.out.println();
 
         System.out.println("filter: Gender=FEMALE; findFirst:");
-        System.out.println(curArrayListPerson.stream()
+        curArrayListPerson.stream()
                 .filter(x->x.getGender().equals(FEMALE))
                 //findFirst возвращает первый элемент из стрима (возвращает Optional)
                 //есть еще findAny
@@ -85,22 +87,40 @@ public class DemoStreamAPI {
                 //https://metanit.com/java/tutorial/10.12.php
                 //https://sboychenko.ru/java-optional/
                 //https://habr.com/ru/post/225641/
-                //Но нужно быть уверенным, что не возврщаемое значение не null, иначе будет ошибка
+                //Но нужно быть уверенным, что возвращаемое значение не null, иначе будет ошибка
                 //java.util.NoSuchElementException
-                //Поскольку у Age тип int, то даже если бы конструкто Person был без него, то int по умолчанию
-                // проставился бы 0, т.е. null никогда не возникнет, поэтому можно смело вызывать get
-                .get());
+                //Поэтому чтобы ошибка не возникала можно использовать ifPresent, который также как forEach принимает
+                // интерфейс Consumer, т.е. ничего не возвращает - void
+                //Так же есть ifPresentOrElse, OrElse, см. пример использования ниже
+                .ifPresent(System.out::println);
         System.out.println();
 
-        System.out.println("filter: Gender=FEMALE; findFirst:");
+        System.out.println("filter: Age>100; findFirst:");
         curArrayListPerson.stream()
-                .filter(x->x.getAge()>20)
-                //findFirst возвращает первый элемент из стрима (возвращает Optional)
-                //есть еще findAny
+                .filter(x->x.getAge()>100)
                 .findFirst()
-                //поскольку findFirst возвращает тип Optional, то чтобы получить Person необходимо вызвать get
-                //https://metanit.com/java/tutorial/10.12.php
-                .ifPresent(System.out::println);
+                //ifPresentOrElse как и ifPresent принимает Consumer
+                .ifPresentOrElse(
+                        System.out::println,
+                        ()-> System.out.println("Not found")
+                );
+        System.out.println();
+
+        System.out.println("filter: Age>100; findFirst:");
+        Person firstPerson = curArrayListPerson.stream()
+                .filter(x->x.getAge()>100)
+                .findFirst()
+                /*Если цель обработки не вывод c использованием ifPresent, ifPresentOrElse, а присвоить найденное
+                 значение переменной, то обрабатывать нужно через orElse, который НЕ void
+                Написать тоже самое через ifPresentOrElse, например:
+                .ifPresentOrElse(
+                    x->{firstPerson=x;},
+                    ()->{firstPerson=new Person();}
+                );
+                не получится, т.к. в lyambda-выражениях локальные переменные должны быть final или effective final
+                https://www.examclouds.com/ru/java/java-core-russian/functional-interface-russian*/
+                .orElse(new Person());
+        System.out.println(firstPerson);
         System.out.println();
 
         System.out.println("anyMatch: Gender=FEMALE, Age=30:");
@@ -124,7 +144,7 @@ public class DemoStreamAPI {
                     //изменяются атрибуты элемента
                     x.setFirstName(x.getFirstName().toUpperCase());
                     x.setLastName(x.getLastName().toUpperCase());
-                    //и вернул его
+                    //и возвращает его
                     return x;
                 })
                 .forEach(System.out::println);
@@ -143,20 +163,23 @@ public class DemoStreamAPI {
                 // переопределены для собственных классов
                 .distinct()
                 //Перед формированием коллекции TreeSet производится сортировка элементов и соответственно при
-                // создании TreeSet элемент будут добавлены попорядку
+                // создании TreeSet элементы будут добавлены попорядку
                 //Помним, что (p1,p2)->p1.compareTo(p2) можно написать через Method References: Integer::compare
                 .sorted((p1,p2)->p1.compareTo(p2))
-                //Получение коллекции TreeSet https://metanit.com/java/tutorial/10.6.php
-                //toCollection реализует добавление элемента в коллекцию и возвращение новой коллекции с добавленным элементом.
-                //Поскольку в stream перебираются все элементы, то в итоге будет возвращена коллекция, в которую
-                // будут добавлены все элементы stream
-                //Помни, что ()->new TreeSet<>() можно написать через TreeSet::new
+                /*Получение коллекции TreeSet https://metanit.com/java/tutorial/10.6.php
+                toCollection реализует добавление элемента в коллекцию и возвращение новой коллекции с добавленным элементом:
+                CollectorImpl<>(collectionFactory, Collection<T>::add,
+                                (r1, r2) -> { r1.addAll(r2); return r1; },
+                                CH_ID)
+                Поскольку в stream перебираются все элементы, то в итоге будет возвращена коллекция, в которую
+                 будут добавлены все элементы stream.
+                Помним, что ()->new TreeSet<>() можно написать через TreeSet::new*/
                 .collect(Collectors.toCollection(()->new TreeSet<>()));
         System.out.println(ageSet);
         System.out.println();
 
         System.out.println("filter: Gender=FEMALE; map: Age; max:");
-        System.out.println(curArrayListPerson.stream()
+        curArrayListPerson.stream()
                 .filter(x->x.getGender().equals(FEMALE))
                 //получение stream из Age
                 .map(Person::getAge)
@@ -167,7 +190,9 @@ public class DemoStreamAPI {
                 //https://metanit.com/java/tutorial/10.12.php
                 //Можно также генерировать исключение orElseThrow
 //                .orElse(0)
-                .get());
+                //Поскольку у Age тип int, то даже если бы конструкто Person был без него, то int по умолчанию
+                // проставился бы 0, т.е. null никогда не возникнет, поэтому можно смело вызывать get
+                .orElse(0);
         System.out.println();
 
         System.out.println("filter: Gender=FEMALE; map: LastName; max:");
