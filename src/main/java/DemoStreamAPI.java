@@ -288,7 +288,7 @@ public class DemoStreamAPI {
                 //Получаем Set<Map.Entry<GenderType,Long>> и преобразуем в stream
                 .entrySet().stream()
                 //Сортируем
-                .sorted((o1, o2) -> {((Long) o1.getValue().longValue()).compareTo((Long) o2.getValue().longValue())})
+                .sorted((o1, o2) -> {return ((Long) o1.getValue().longValue()).compareTo((Long) o2.getValue().longValue());})
                 //Получаем результирующую коллекцию - список
                 .collect(Collectors.toList());
         System.out.println(listCountGenderType);
