@@ -91,7 +91,7 @@ public class DemoStreamAPI {
                 //java.util.NoSuchElementException
                 //Поэтому чтобы ошибка не возникала можно использовать ifPresent, который также как forEach принимает
                 // интерфейс Consumer, т.е. ничего не возвращает - void
-                //Так же есть ifPresentOrElse, OrElse, см. пример использования ниже
+                //Так же есть ifPresentOrElse, OrElse, orElseThrow, см. пример использования ниже
                 .ifPresent(System.out::println);
         System.out.println();
 
@@ -183,57 +183,44 @@ public class DemoStreamAPI {
                 .filter(x->x.getGender().equals(FEMALE))
                 //получение stream из Age
                 .map(Person::getAge)
-                //max принимает Comparator интерфейс
+                //max принимает Comparator интерфейс и возвращает Optional
                 .max(Integer::compareTo)
-                //Допустим, если вораст м.б. не известен, то чтобы не возникало исключение при вызове get,
-                // используется orElse с возвратом в этом случае по умолчанию 0
-                //https://metanit.com/java/tutorial/10.12.php
-                //Можно также генерировать исключение orElseThrow
-//                .orElse(0)
                 //Поскольку у Age тип int, то даже если бы конструкто Person был без него, то int по умолчанию
-                // проставился бы 0, т.е. null никогда не возникнет, поэтому можно смело вызывать get
-                .orElse(0);
+                //проставился бы 0, т.е. null никогда не возникнет, поэтому можно смело вызывать get
+                //Но будем использовать специальные методы по аналогию с описанием выше
+                .ifPresent(System.out::println);
         System.out.println();
 
         System.out.println("filter: Gender=FEMALE; map: LastName; max:");
-        System.out.println(curArrayListPerson.stream()
+        curArrayListPerson.stream()
                 //Если не исключить LastName=null, то на этапе map нужно подготавливать данные для max, иначе
                 // возникнет ошибка java.lang.NullPointerException, т.е. заменять null на "", см. ниже
                 .filter(x->x.getLastName()!=null)
-                //Получение stream из Age
-                .map(Person::getLastName)
-//                .map(x->{
-//                    if (x.getLastName()!=null) {
-//                        return x.getLastName();
-//                    } else {
-//                        return "";
-//                    }})
-                //max принимает Comparator интерфейс
+                //Получение stream из LastName
+                //Поскольку дальше в max используется сравнение String, то чтобы исключить проблему аналогичную
+                //примеру "sorted: LastName desc:", нужно заменить null на ""
+                //Второй вариант исключить LastName=null заранее с помощью filter
+                .map(x->{return x.getLastName()==null ? "" : x.getLastName();})
                 .max(String::compareTo)
-                //Допустим, если вораст м.б. не известен, то чтобы не возникало исключение
-                // java.util.NoSuchElementException при вызове get используется orElse с возвратом значения по умолчанию
-                //https://metanit.com/java/tutorial/10.12.php
-                //Можно также генерировать исключение orElseThrow
-//                .orElse("-")
-                .get()
-        );
+                .ifPresent(System.out::println);
         System.out.println();
 
         //Поиск максимального через reduce
         System.out.println("filter: Gender=FEMALE; map: Age; reduce(max):");
-        System.out.println(curArrayListPerson.stream()
+        curArrayListPerson.stream()
                 .filter(x->x.getGender().equals(FEMALE))
                 //получение stream из Age
                 .map(Person::getAge)
                 //метод reduce принимает объект BinaryOperator<T>, который представляет функцию, которая принимает два
-                //элемента и выполняет над ними некоторую операцию, возвращая результат. При этом метод reduce сохраняет
+                //элемента и выполняет над ними операцию, возвращая результат. При этом метод reduce сохраняет
                 //результат и затем опять же применяет к этому результату и следующему элементу в наборе бинарную операцию.
                 .reduce((x,y)->(Integer.max(x,y)))
-                .orElse(0));
+                //reduce тоже возвращает Optional
+                .ifPresent(System.out::println);
         System.out.println();
 
         System.out.println("filter: Gender=FEMALE; map: Age; average:");
-        System.out.println(curArrayListPerson.stream()
+        curArrayListPerson.stream()
                 .filter(x->x.getGender().equals(FEMALE))
                 .map(Person::getAge)
                 //Через приведение сразу в map не работает
@@ -242,18 +229,18 @@ public class DemoStreamAPI {
                 //приводить отдельно через mapToInt в IntStream
                 .mapToInt(x->(Integer) x)
                 .average()
-                .orElse(0));
+                .ifPresent(System.out::println);
         System.out.println();
 
         System.out.println("flatMap:");
         //List.of позволяет преобразовывать Array в ArrayList
-        // массива
         TreeSet<Integer> integerTreeSet = List.of("1;2;0", "4;5").stream()
                 //Преобразовываем строки в массив через split, см. DemoString.
                 //flatMap похож на метод map, но может создавать из одного элемента несколько
-                //В данном случае получается для каждой записи ArrayList происходит создание ещё на несколько
+                //В данном случае получается для каждой записи ArrayList происходит создание несколько
                 //посредством преобразования строки в массив
                 .flatMap(x->List.of(x.split(";")).stream())
+                //valueOf преобразовываем String в Integer
                 .map(x->Integer.valueOf(x))
                 .sorted(Integer::compareTo)
                 //Получаем TreeSet
@@ -267,13 +254,15 @@ public class DemoStreamAPI {
         Map<GenderType, List<Person>> personsByGender = curArrayListPerson.stream()
                 .collect(Collectors.groupingBy(Person::getGender));
         System.out.println(personsByGender);
-        System.out.println("сортировка по возрасту (обратно):");
+        System.out.println("сортировка List<Person> по возрасту (убыванию):");
         personsByGender.entrySet().stream()
-        .map(x->{
-            x.getValue().sort((o1, o2) -> ((Integer) o2.getAge()).compareTo((Integer) o1.getAge()));
-            return x;
-        })
-        .collect(Collectors.toList());
+                .map(x->{
+                    //Сортируем каждый List<Person> и возвращаем его
+                    x.getValue().sort((o1, o2) -> ((Integer) o2.getAge()).compareTo((Integer) o1.getAge()));
+                    return x;
+                })
+                //Получаем обновленную отсортированную коллекцию
+                .collect(Collectors.toList());
         System.out.println(personsByGender);
 
         System.out.println("partitioningBy: Gender=MALE:");
@@ -284,10 +273,25 @@ public class DemoStreamAPI {
         System.out.println(personsByMale);
         System.out.println();
 
-        System.out.println("groupingBy: Gender: counting:");
+        System.out.println("groupingBy: Gender: counting (до сортировки):");
+        //Long поскольку counting возвращает Long
         Map<GenderType,Long> countPersonsByGender = curArrayListPerson.stream()
                 .collect(Collectors.groupingBy(Person::getGender, Collectors.counting()));
         System.out.println(countPersonsByGender);
+        System.out.println();
+
+        //Тоже самое, но сразу с сортировкой
+        System.out.println("groupingBy: Gender: counting (сортировка по количеству (возрастанию):");
+        List<Map.Entry<GenderType,Long>> listCountGenderType = curArrayListPerson.stream()
+                //Аналогично реализации выше
+                .collect(Collectors.groupingBy(Person::getGender, Collectors.counting()))
+                //Получаем Set<Map.Entry<GenderType,Long>> и преобразуем в stream
+                .entrySet().stream()
+                //Сортируем
+                .sorted((o1, o2) -> {((Long) o1.getValue().longValue()).compareTo((Long) o2.getValue().longValue())})
+                //Получаем результирующую коллекцию - список
+                .collect(Collectors.toList());
+        System.out.println(listCountGenderType);
         System.out.println();
 
         System.out.println("groupingBy: Gender: summingInt:");
