@@ -64,20 +64,11 @@ public class DemoComparator {
         System.out.println("Сортировка по полу:объявление в методе sort:");
         System.out.println(persons.toString());
 
-        //Через lyambda, т.е. анонимный метод аналогичный compare в PersonComparatorGenderDescription
-        //https://riptutorial.com/java/example/387/using-lambda-expressions-to-sort-a-collection
-        Collections.sort(
-                persons,
-                (Person o1,Person o2)->(o1.getGender().getDescription().compareTo(o2.getGender().getDescription()))
-        );
-        System.out.println("Сортировка по полу:lyambda:");
-        System.out.println(persons.toString());
-
         //Через Comparator.comparing
         //Если открыть реализацию Comparator.comparing, то можно увидеть, что это метод принимает Function интерфейс,
         // т.е. lyambda (но входные параметры не Person, а getGender().getDescription()) и возвращает
         // Comparator со следующим lyambda (c1, c2) -> keyExtractor.apply(c1).compareTo(keyExtractor.apply(c2));
-        //т.е. аналогично предыдущей реализации
+        //т.е. аналогично реализации через lyambda, см. ниже
         Collections.sort(
                 persons,
                 Comparator.comparing(x -> x.getGender().getDescription())
@@ -105,12 +96,21 @@ public class DemoComparator {
         System.out.println("Сортировка по ФИ:");
         System.out.println(persons.toString());
 
+        //Через lyambda, т.е. анонимный метод аналогичный compare в PersonComparatorGenderDescription
+        //https://riptutorial.com/java/example/387/using-lambda-expressions-to-sort-a-collection
+        Collections.sort(
+                persons,
+                (o1,o2)->(o1.getGender().getDescription().compareTo(o2.getGender().getDescription()))
+        );
+        System.out.println("Сортировка по полу:lyambda:");
+        System.out.println(persons.toString());
+
         //Сортировка по ФИ в обратном порядке:
         Collections.sort(
                 persons,
                 //Для сортировки в обратном нужно сравнивать o2 с o1
                 //thenComparing - это аналог "+" через compareTo
-                (Person o1,Person o2)->((o2.getLastName().compareTo(o1.getLastName()))
+                (o1,o2)->((o2.getLastName().compareTo(o1.getLastName()))
                         +(o2.getFirstName().compareTo(o1.getFirstName())))
         );
         System.out.println("Сортировка по ФИ (обратно):");

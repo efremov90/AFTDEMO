@@ -123,13 +123,26 @@ public class DemoHashMap {
         }
         System.out.println();
 
-        //Сортировка через LinkedList аналогично DemoComparator
+        //Сортировка через List<Map.Entry<String, Person>>
+        List<Map.Entry<String, Person>> listMapEntry = new LinkedList<>(curHashMap.entrySet());
+        Collections.sort(
+                listMapEntry,
+                //Comparator аналогично DemoComparator
+                (o1,o2)->((o1.getValue().getLastName().compareTo(o2.getValue().getLastName()))
+                        +(o1.getValue().getFirstName().compareTo(o2.getValue().getFirstName())))
+        );
+        System.out.println("Сортировка по ФИ List<Map.Entry<String, Person>>:");
+        System.out.println(listMapEntry.toString());
+        System.out.println();
+
+        //Сортировка через List<Person> аналогично DemoComparator
         List<Person> persons = new LinkedList<>(curHashMap.values());
         Collections.sort(
                 persons,
-                Comparator.comparing(Person::getLastName).thenComparing(Person::getFirstName)
+                (o1,o2)->((o1.getLastName().compareTo(o2.getLastName()))
+                        +(o1.getFirstName().compareTo(o2.getFirstName())))
         );
-        System.out.println("Сортировка по ФИ LinkedList:");
+        System.out.println("Сортировка по ФИ List<Person>:");
         System.out.println(persons.toString());
         System.out.println();
 
@@ -147,6 +160,7 @@ public class DemoHashMap {
         // Comparator'у
         SortedMap sortedMap = new TreeMap(curHashMap);
         System.out.println(sortedMap);
+        System.out.println();
 
         //Можно переопредять Comparator, см. DemoComparator
         System.out.println("Сортировка SortedMap (обратно):");
@@ -163,6 +177,7 @@ public class DemoHashMap {
         //У SortedMap есть дополнительные методы: firstKey, lastKey http://espressocode.top/sortedmap-java-examples/
         System.out.println("lastKey() = "+descSortedMap.lastKey()+"; get(lastKey()) = "+descSortedMap.get(descSortedMap.lastKey()));
         //Также еще есть методы headMap, tailMap, subMap
+        System.out.println();
 
         //Сортировка через SortedSet http://espressocode.top/sortedset-java-examples/
         //Про HashSet см. DemoHashSet
@@ -183,13 +198,14 @@ public class DemoHashMap {
         //У SortedSet есть дополнительные методы: first(), last() http://espressocode.top/sortedset-java-examples/
         System.out.println("last() = "+ascAgeTreeSet.last());
         //Также еще есть методы headSet, tailSet, subSet
+        System.out.println();
 
         //Сортировка через SortedSet
         System.out.println("Сортировка SortedSet по возрасту (обратно):");
         //Через lyambda, см. DemoComparator
         SortedSet<Person> descAgeSortedSet = new TreeSet<>(
                 //Для использования compareTo int нужно привести к Integer
-                (Person o1,Person o2)->((Integer) o2.getAge()).compareTo((Integer) o1.getAge())
+                (o1,o2)->((Integer) o2.getAge()).compareTo((Integer) o1.getAge())
         );
         descAgeSortedSet.addAll(curHashMap.values());
         System.out.println(descAgeSortedSet);
