@@ -16,7 +16,7 @@ public class DemoStreamAPI {
         curArrayListPerson.add(new Person("Имя2", "Фамилия2", "N2",MALE,30));
         curArrayListPerson.add(new Person("Имя3", "Фамилия1", "N3",FEMALE,31));
         curArrayListPerson.add(new Person("Имя4", "Фамилия4", "N4",MALE,31));
-        curArrayListPerson.add(new Person("Имя5", null, "N5",FEMALE,32));
+        curArrayListPerson.add(new Person("Имя5", null, "N5",FEMALE,31));
 
         System.out.println("curArrayListPerson:");
         System.out.println(curArrayListPerson);
@@ -254,6 +254,8 @@ public class DemoStreamAPI {
         Map<GenderType, List<Person>> personsByGender = curArrayListPerson.stream()
                 .collect(Collectors.groupingBy(Person::getGender));
         System.out.println(personsByGender);
+        System.out.println();
+
         System.out.println("сортировка List<Person> по возрасту (убыванию):");
         personsByGender.entrySet().stream()
                 .map(x->{
@@ -281,7 +283,7 @@ public class DemoStreamAPI {
         System.out.println();
 
         //Тоже самое, но сразу с сортировкой
-        System.out.println("groupingBy: Gender: counting (сортировка по количеству (возрастанию):");
+        System.out.println("groupingBy: Gender: counting: сортировка по количеству (возрастанию):");
         List<Map.Entry<GenderType,Long>> listCountGenderType = curArrayListPerson.stream()
                 //Аналогично реализации выше
                 .collect(Collectors.groupingBy(Person::getGender, Collectors.counting()))
@@ -321,39 +323,41 @@ public class DemoStreamAPI {
         System.out.println();
 
         //https://reversecoding.net/java-8-list-to-map/
-        System.out.println("persons list to map:");
+        System.out.println("Преобразование ArrayList<Persons> в Map<PersonalNumber,Person>:");
         Map<String,Person> personMap = curArrayListPerson.stream()
                 .collect(Collectors.toMap(x->x.getPersonalNumber(), x->x));
         System.out.println(personMap);
         System.out.println();
 
-        System.out.println(":");
-        Map<GenderType,String> agesByGenderMap = curArrayListPerson.stream()
-                .collect(Collectors.toMap(x->x.getGender(),x->String.valueOf(x.getAge()),(x,y)->x+", "+y));
-        System.out.println(agesByGenderMap);
-        System.out.println();
-
-        System.out.println(":");
+        System.out.println("Преобразование ArrayList<Persons> в Map<Gender,PersonalNumber> с сортировкой по " +
+                "Gender (убыванию):");
         TreeMap<GenderType,String> agesByGenderTreeMap = curArrayListPerson.stream()
-                .collect(Collectors.toMap(x->x.getGender(),x->String.valueOf(x.getAge()),(x,y)->x+", "+y,
+                .collect(Collectors.toMap(x->x.getGender(),x->x.getPersonalNumber(),(x,y)->x+", "+y,
                         ()->new TreeMap<>((o1, o2) -> o2.compareTo(o1))));
         System.out.println(agesByGenderTreeMap);
         System.out.println();
 
-        System.out.println(":");
-        //При группировке будет создан объект Map, в котором ключами являются Gender, а значениями - List<Person>
-        TreeMap<GenderType,LinkedList<Integer>> agesListGroupByGender = curArrayListPerson.stream()
+        System.out.println("Получение для Gender сконкантенированной строки из PersonalNumber:");
+        Map<GenderType,String> agesByGenderMap = curArrayListPerson.stream()
+                .collect(Collectors.toMap(x->x.getGender(),x->x.getPersonalNumber(),(x,y)->x+", "+y));
+        System.out.println(agesByGenderMap);
+        System.out.println();
+
+        System.out.println("Преобразование Map<Gender,List<Person>> в TreeMap<Gender,LinkedList<PersonalNumber>> с " +
+                "сортировкой по Gender (убыванию) и сортировкой PersonalNumber (убыванию):");
+        TreeMap<GenderType,LinkedList<String>> agesListGroupByGender = curArrayListPerson.stream()
+                //При группировке получим Map<Gender,List<Person>>
                 .collect(Collectors.groupingBy(Person::getGender))
                 .entrySet().stream()
                         .collect(Collectors.toMap(x->x.getKey(),
                                 x->{
-                            LinkedList<Integer> y = new LinkedList<>();
-                            x.getValue().forEach(z->y.add(z.getAge()));
+                            LinkedList<String> y = new LinkedList<>();
+                            x.getValue().forEach(z->y.add(z.getPersonalNumber()));
                             Collections.sort(y,(o1, o2) -> o2.compareTo(o1));
                             return y;
-                            },
-                                (x,y)->y,
-                                ()->new TreeMap<>((o1, o2) -> o2.compareTo(o1))
+                            }
+                                ,(x,y)->y
+                                ,()->new TreeMap<>((o1, o2) -> o2.compareTo(o1))
                         )
                         );
         System.out.println(agesListGroupByGender);
