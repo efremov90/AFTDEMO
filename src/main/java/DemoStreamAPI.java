@@ -289,7 +289,7 @@ public class DemoStreamAPI {
                 .entrySet().stream()
                         //Сортируем
                         .sorted((o1, o2) -> {return ((Long) o1.getValue().longValue()).compareTo((Long) o2.getValue().longValue());})
-                        //Получаем результирующую коллекцию - список
+                        //Получаем результирующую коллекцию List
                         .collect(Collectors.toList());
         System.out.println(listCountGenderType);
         System.out.println();
@@ -301,40 +301,61 @@ public class DemoStreamAPI {
         System.out.println();
 
         System.out.println("groupingBy: Gender: maxBy:");
-        //При группировке будет создан объект Map, в котором ключами являются Gender, а значениями - Optional<Person>
-        curArrayListPerson.stream()
+        //Получение человека с максимальным возрастом в разрезе пола
+        Map<GenderType,Person> personsMaxByAgeGroupByGender = curArrayListPerson.stream()
+                //При группировке будет создан объект Map, в котором ключами являются Gender, а значениями - Optional<Person>
                 .collect(Collectors.groupingBy(Person::getGender,
                         Collectors.maxBy(Comparator.comparing(Person::getAge)))
                 )
+                //Получаем EntrySet для преобразования Map с optional в Map без optional (например нужно)
                 .entrySet().stream()
-                .map(x->{
-                    Map<GenderType,Person> y = new HashMap<>();
-                    y.put(x.getKey(),x.getValue().get());
-                    return y;
-                })
-                .forEach(System.out::println);
+                //Получаем результирующую коллекцию Map
+                .collect(Collectors.toMap(x->x.getKey(),x->x.getValue().orElse(new Person())));
+        System.out.println(personsMaxByAgeGroupByGender);
         System.out.println();
-
-        System.out.println("groupingBy: Gender: maxBy:");
-        //При группировке будет создан объект Map, в котором ключами являются Gender, а значениями - Optional<Person>
-        Map<GenderType,Optional<Person>> maxAgeOptionalPersonsByGender = curArrayListPerson.stream()
-                .collect(Collectors.groupingBy(Person::getGender,
-                        Collectors.maxBy(Comparator.comparing(Person::getAge)))
-                );
-        //Преобрзовать в Map<GenderType,Person> без Optional сразу в одном stream не получилось, пришлось отдельно
-//        Map<GenderType,Person> maxAgePersonsByGender = new HashMap<>();
-//        maxAgeOptionalPersonsByGender.forEach((x,y)->{
-//            maxAgePersonsByGender.put(x,y.get());
-//        });
-//        Map<GenderType,Person> maxAgePersonsByGender = maxAgeOptionalPersonsByGender.entrySet().stream()
-//                .collect()
-//        System.out.println(maxAgePersonsByGender);
-//        System.out.println();
 
         System.out.println("groupingBy: Gender: summarizingInt: Age:");
         Map<GenderType,IntSummaryStatistics> intSummaryStatisticsGenderMap = curArrayListPerson.stream()
                 .collect(Collectors.groupingBy(Person::getGender, Collectors.summarizingInt(Person::getAge)));
         System.out.println(intSummaryStatisticsGenderMap);
+        System.out.println();
 
+        //https://reversecoding.net/java-8-list-to-map/
+        System.out.println("persons list to map:");
+        Map<String,Person> personMap = curArrayListPerson.stream()
+                .collect(Collectors.toMap(x->x.getPersonalNumber(), x->x));
+        System.out.println(personMap);
+        System.out.println();
+
+        System.out.println(":");
+        Map<GenderType,String> agesByGenderMap = curArrayListPerson.stream()
+                .collect(Collectors.toMap(x->x.getGender(),x->String.valueOf(x.getAge()),(x,y)->x+", "+y));
+        System.out.println(agesByGenderMap);
+        System.out.println();
+
+        System.out.println(":");
+        TreeMap<GenderType,String> agesByGenderTreeMap = curArrayListPerson.stream()
+                .collect(Collectors.toMap(x->x.getGender(),x->String.valueOf(x.getAge()),(x,y)->x+", "+y,
+                        ()->new TreeMap<>((o1, o2) -> o2.compareTo(o1))));
+        System.out.println(agesByGenderTreeMap);
+        System.out.println();
+
+        System.out.println(":");
+        //При группировке будет создан объект Map, в котором ключами являются Gender, а значениями - List<Person>
+        TreeMap<GenderType,LinkedList<Integer>> agesListGroupByGender = curArrayListPerson.stream()
+                .collect(Collectors.groupingBy(Person::getGender))
+                .entrySet().stream()
+                        .collect(Collectors.toMap(x->x.getKey(),
+                                x->{
+                            LinkedList<Integer> y = new LinkedList<>();
+                            x.getValue().forEach(z->y.add(z.getAge()));
+                            Collections.sort(y,(o1, o2) -> o2.compareTo(o1));
+                            return y;
+                            },
+                                (x,y)->y,
+                                ()->new TreeMap<>((o1, o2) -> o2.compareTo(o1))
+                        )
+                        );
+        System.out.println(agesListGroupByGender);
     }
 }
