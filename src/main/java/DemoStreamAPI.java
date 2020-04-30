@@ -16,7 +16,7 @@ public class DemoStreamAPI {
         curArrayListPerson.add(new Person("Имя2", "Фамилия2", "N2",MALE,30));
         curArrayListPerson.add(new Person("Имя3", "Фамилия1", "N3",FEMALE,31));
         curArrayListPerson.add(new Person("Имя4", "Фамилия4", "N4",MALE,31));
-        curArrayListPerson.add(new Person("Имя5", null, "N5",FEMALE,31));
+        curArrayListPerson.add(new Person("Имя5", null, "N5",FEMALE,32));
 
         System.out.println("curArrayListPerson:");
         System.out.println(curArrayListPerson);
