@@ -93,7 +93,7 @@ public class DemoArrayList {
         //contains(Object obj) возвращает true, если obj является элементом вызывающей коллекции
         // contains,remove(Object obj) при вызове по объекту работают по ссылке, т.е. передав новый объект с похожим
         // реквизитным составом, он не найдется, не удалится
-        // это относится для любых классов
+        // это относится для любых классов, в т.ч. Integer
         Person duplicateP2 = new Person("Имя2", "Фамилия2", MALE);
         System.out.println("curArrayListPerson.contains(duplicateP2): "+curArrayListPerson.contains(duplicateP2));
         System.out.println("curArrayListPerson.contains(P2): "+curArrayListPerson.contains(P2));

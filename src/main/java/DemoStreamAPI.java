@@ -2,12 +2,14 @@ package main.java;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static main.java.GenderType.FEMALE;
 import static main.java.GenderType.MALE;
 
 //Stream API https://metanit.com/java/tutorial/10.1.php
 //https://habr.com/ru/company/luxoft/blog/270383/
+//https://annimon.com/article/2778
 public class DemoStreamAPI {
     public static void main(String[] args) {
 
@@ -346,7 +348,12 @@ public class DemoStreamAPI {
 
         System.out.println("Получение для Gender сконкантенированной строки из PersonalNumber:");
         Map<GenderType,String> agesByGenderMap = curArrayListPerson.stream()
-                .collect(Collectors.toMap(x->x.getGender(),x->x.getPersonalNumber(),(x,y)->x+", "+y));
+                .collect(Collectors.toMap(x->x.getGender(),x->x.getPersonalNumber(),(x,y)->String.join(",",x,y)));
+        System.out.println(agesByGenderMap);
+        System.out.println();
+        System.out.println("с обрамлением {}:");
+        //За один проход не получилось пришлось разнести
+        agesByGenderMap.entrySet().stream().forEach(x->x.setValue("{"+x.getValue()+"}"));
         System.out.println(agesByGenderMap);
         System.out.println();
 
@@ -368,5 +375,16 @@ public class DemoStreamAPI {
                         )
                         );
         System.out.println(agesListGroupByGender);
+        System.out.println();
+
+        //Генерация случайных чисел http://java-online.ru/java-random.xhtml
+        List<Long> listInt = Stream.generate(()->Math.round((Math.random()*(2-(-2))+(-2))))
+                .limit(10).collect(Collectors.toList());
+        //https://annimon.com/article/2778
+        System.out.println("Collectors.joining:");
+        System.out.println(listInt.stream()
+                        .map(String::valueOf)
+                        .collect(Collectors.joining(",","<list>","</list>"))
+        );
     }
 }
