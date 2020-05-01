@@ -162,9 +162,10 @@ public class DemoStreamAPI {
                 //Возвращает стрим без дубликатов на основании методов hashCode и equals, поэтому важно чтобы они были
                 // переопределены для собственных классов
                 .distinct()
-                //Перед формированием коллекции TreeSet производится сортировка элементов и соответственно при
-                // создании TreeSet элементы будут добавлены попорядку
-                //Помним, что (p1,p2)->p1.compareTo(p2) можно написать через Method References: Integer::compare
+                /*Перед формированием коллекции TreeSet производится сортировка элементов и соответственно при
+                 создании TreeSet элементы будут добавлены попорядку.
+                Помним, что (p1,p2)->p1.compareTo(p2) можно написать через Method References: Integer::compare.
+                Можно было бы не сортировать предварительно, а ниже в new TreeSet<>(добавить аналогичный компаратор)*/
                 .sorted((p1,p2)->p1.compareTo(p2))
                 /*Получение коллекции TreeSet https://metanit.com/java/tutorial/10.6.php
                 toCollection реализует добавление элемента в коллекцию и возвращение новой коллекции с добавленным элементом:
@@ -173,6 +174,11 @@ public class DemoStreamAPI {
                                 CH_ID)
                 Поскольку в stream перебираются все элементы, то в итоге будет возвращена коллекция, в которую
                  будут добавлены все элементы stream.
+                Также есть специальные методы toSet, toList, toMap. toSet/toList используются, когда нужно вернуть
+                простую коллекцию Set/List, они ничего не принимают.
+                Пример с toList ниже.
+                Примеры с разновидностью toMap ниже.
+                toCollection используется для создания произвольной коллекции.
                 Помним, что ()->new TreeSet<>() можно написать через TreeSet::new*/
                 .collect(Collectors.toCollection(()->new TreeSet<>()));
         System.out.println(ageSet);
@@ -323,6 +329,7 @@ public class DemoStreamAPI {
         System.out.println();
 
         //https://reversecoding.net/java-8-list-to-map/
+        //https://www.concretepage.com/java/jdk-8/java-8-convert-list-to-map-using-collectors-tomap-example
         System.out.println("Преобразование ArrayList<Persons> в Map<PersonalNumber,Person>:");
         Map<String,Person> personMap = curArrayListPerson.stream()
                 .collect(Collectors.toMap(x->x.getPersonalNumber(), x->x));
