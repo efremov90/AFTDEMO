@@ -11,6 +11,26 @@ import static main.java.GenderType.MALE;
 //https://habr.com/ru/company/luxoft/blog/270383/
 //https://annimon.com/article/2778
 public class DemoStreamAPI {
+
+    //Debug-методы для отладки Stream API. Пример смотреть ниже "Отладка debug", заодно позволяет понять как пошаго
+    // работает Stream API
+    private static boolean debugFilter(int i, Person n) {
+        //Нужно потавить точку останова, если необходимо отслеживать
+        System.out.println("debugFilter("+i+"):"+n);
+        return true;
+    }
+
+    private static Person debugMap(int i, Person n) {
+        //Нужно потавить точку останова, если необходимо отслеживать
+        System.out.println("debugMap("+i+"):"+n);
+        return n;
+    }
+
+    private static void debugForEach(int i, Person n) {
+        //Нужно потавить точку останова, если необходимо отслеживать
+        System.out.println("debugForEach("+i+"):"+n);
+    }
+
     public static void main(String[] args) {
 
         List<Person> curArrayListPerson = new ArrayList<>();
@@ -138,9 +158,18 @@ public class DemoStreamAPI {
                 .count());
         System.out.println();
 
+        /*Отладка debug https://vertex-academy.com/tutorials/ru/java-8-stream-debug/
+        Stream API не позволяет просто так пошагово отследить выполнение его методов, необходимо писать отдельные
+         методы, добавлять их в stream и ставить в них точки останова.
+         */
         System.out.println("filter: Gender=MALE; map: FirstName,LastName.toUpperCase:");
+        System.out.println("Отладка debug:");
         curArrayListPerson.stream()
+                //Каждый человек выведется обязательно хотя бы один раз
+                .filter(n->debugFilter(1,n))
                 .filter(x->x.getGender().equals(MALE))
+                //Мужчины выведутся ещё раз, в т.ч. будет видно какие были до изменения map
+                .filter(n->debugFilter(2,n))
                 //map принимает Function интерфейс
                 .map(x->{
                     //изменяются атрибуты элемента
@@ -149,7 +178,10 @@ public class DemoStreamAPI {
                     //и возвращает его
                     return x;
                 })
-                .forEach(System.out::println);
+                //Ещё раз мужчины после изменения map
+                .map(n->debugMap(1,n))
+                //Терминальный метод
+                .forEach(n->debugForEach(1,n));
         System.out.println("curArrayListPerson: "+curArrayListPerson);
         System.out.println();
 
