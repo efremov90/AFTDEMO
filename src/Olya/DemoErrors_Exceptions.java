@@ -2,20 +2,18 @@ package Olya;
 
 public class DemoErrors_Exceptions {
 
-    public static int getResult (int num){
+    public static int getResult (int num) throws Errors_Exceptions {
         int result = 2;
-        try {
-            if (num < 1) throw new Errors_Exceptions("номер должен быть больше 0", num);
+            if (num < 1) {
+                throw new Errors_Exceptions("номер должен быть больше 1", num);
+            }
             for (int i = 1; i <= num; i++) {
                 result += i;
             }
             return result;
         }
-        catch (Errors_Exceptions g) {
-            System.out.println("переделать");
-        }
-       return result;
-    }
+
+
 
     public static void main(String[] args) {
         try {
@@ -49,8 +47,12 @@ public class DemoErrors_Exceptions {
         }
 
 
-        System.out.println(DemoErrors_Exceptions.getResult(0));
-
+       try {
+           System.out.println(DemoErrors_Exceptions.getResult(0));
+       }
+       catch (Errors_Exceptions d) {
+           System.out.println("Перехвачено исключение подкласса исключений " + d);
+       }
 
 
 
