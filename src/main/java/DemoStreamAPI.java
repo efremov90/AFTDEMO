@@ -306,6 +306,7 @@ public class DemoStreamAPI {
                 //Получаем обновленную отсортированную коллекцию
                 .collect(Collectors.toList());
         System.out.println(personsByGender);
+        System.out.println();
 
         System.out.println("partitioningBy: Gender=MALE:");
         //При группировке будет создан объект Map, в котором ключами являются Boolean, а значениями - List<Person>
